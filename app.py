@@ -22,7 +22,7 @@ def login():
 
 @app.route('/workspace')
 def workspace():
-    return render_template("workspace.html", page_title="Workspace", user= "DAVE CAFFREY")
+    return render_template("workspace.html", page_title="Workspace", user="DAVE CAFFREY")
 
 
 if __name__ == "__main__":
