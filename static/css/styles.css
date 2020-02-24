@@ -8,3 +8,11 @@ html,body{
     color: white;
 }
 
+img.card-img{
+    width: 330px;
+    height: 190px;
+}
+
+.signup{
+    margin: 100px 100px 100px 100px;
+}
