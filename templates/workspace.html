@@ -2,33 +2,44 @@
 {% block content %}
 <h2>{{page_title}}</h2>
 <p>You are logged on to your workspace {{ user }}</p>
+    {% for blog in blogs %}
+      {{loop.index}}  
+      {% if loop.index % 2 !=0 %}
+    
 <div class="card mb-3" style="max-width: 1000px;">
   <div class="row no-gutters">
     <div class="col-md-4">
-      <img src="{{url_for('static',filename='images/foggy.jpeg')}}" class="card-img" alt="...">
+      <img src="{{blog.image_src}}" class="card-img" alt="...">
     </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <h5 class="card-title">{{blog.title}}</h5>
+        <p class="card-text">{{blog.body}}</p>
         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
       </div>
     </div>
   </div>
-</div>
+  </div>
+  {% else %}
 <div class="card mb-3" style="max-width: 1000px;">
   <div class="row no-gutters">
     
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <h5 class="card-title">{{blog.title}}</h5>
+        <p class="card-text">{{blog.body}}</p>
         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
       </div>
     </div>
     <div class="col-md-4">
-      <img src="{{url_for('static',filename='images/gold.jpeg')}}" class="card-img" alt="...">
+      <img src="{{blog.image_src}}" class="card-img" alt="...">
     </div>
   </div>
 </div>
+  {% endif %}
+
+
+
+{% endfor %}
+
 {% endblock %}

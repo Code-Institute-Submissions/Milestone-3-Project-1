@@ -1,0 +1,11 @@
+[
+    {
+        "name" : "Facebook",
+        "ticker" : "FB"
+    },
+    {
+        "name": "Google",
+        "ticker":"GOOG"
+    }
+
+]

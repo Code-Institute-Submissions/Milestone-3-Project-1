@@ -1,0 +1,67 @@
+[
+    {
+        "title": "Is Tesla in trouble?",
+        "body": "this is the body of a blog",
+        "user" :"who wrote the blog",
+        "date": "the date and time the blog was input",
+        "image_src" : "static/images/gold.jpeg"
+    
+    },
+    {
+        "title": "Is Amazon in trouble?",
+        "body": "this is the body of a blog",
+        "user" :"who wrote the blog",
+        "date": "the date and time the blog was input",
+        "image_src" : "static/images/gold.jpeg"
+    
+    },
+    {
+        "title": "Is Google in trouble?",
+        "body": "this is the body of a blog",
+        "user" :"who wrote the blog",
+        "date": "the date and time the blog was input",
+        "image_src" : "static/images/gold.jpeg"
+    
+    },
+    {
+        "title": "Is Netflix in trouble?",
+        "body": "this is the body of a blog",
+        "user" :"who wrote the blog",
+        "date": "the date and time the blog was input",
+        "image_src" : "static/images/gold.jpeg"
+    
+    },
+    {
+        "title": "Is Gold in trouble?",
+        "body": "this is the body of a blog",
+        "user" :"who wrote the blog",
+        "date": "the date and time the blog was input",
+        "image_src" : "static/images/gold.jpeg"
+    
+    },
+    {
+        "title": "Are Bonds in trouble?",
+        "body": "this is the body of a blog",
+        "user" :"who wrote the blog",
+        "date": "the date and time the blog was input",
+        "image_src" : "static/images/gold.jpeg"
+    
+    },
+    {
+        "title": "Is Donald trump in trouble?",
+        "body": "this is the body of a blog",
+        "user" :"who wrote the blog",
+        "date": "the date and time the blog was input",
+        "image_src" : "static/images/gold.jpeg"
+    
+    },
+    {
+        "title": "Is Ireland in trouble?",
+        "body": "this is the body of a blog",
+        "user" :"who wrote the blog",
+        "date": "the date and time the blog was input",
+        "image_src" : "static/images/gold.jpeg"
+    
+    }
+
+]

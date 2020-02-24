@@ -1,4 +1,22 @@
 {% extends 'base.html'%}
 {% block content %}
     <h2>{{page_title}}</h2>
+    <form class="login">
+	<div class="form-row" style="max-width:500px;">
+		<div class="col-md-12">
+			<label for="validationDefault06">User Name</label>
+			<input type="text" class="form-control" id="validationDefault06" value="mruff" required>
+        </div>
+		
+        <div class="col-md-12">
+			<label for="validationDefault04">Password</label>
+			<input type="text" class="form-control" id="validationDefault04" value="password" required>
+        </div>
+       
+       
+		
+        </div>
+        <br>
+          <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 {% endblock %}

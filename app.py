@@ -2,7 +2,7 @@ import os
 import json
 # from the flask module use Flask class and render template function
 from flask import Flask, render_template
-#instantiate Flask class and ref with app 
+# instantiate Flask class and ref with app 
 app = Flask(__name__)
 
 # first template to index/home page
@@ -23,7 +23,11 @@ def login():
 
 @app.route('/workspace')
 def workspace():
-    return render_template("workspace.html", page_title="Workspace", user="DAVE CAFFREY")
+    data = []
+    with open("data/blogs.json", "r") as json_data:
+        data = json.load(json_data)
+    return render_template("workspace.html", page_title="Workspace", user="DAVE CAFFREY", 
+                           list_of_numbers=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], blogs=data)
 
 # call to Flask Class run function passing in 
 if __name__ == "__main__":
