@@ -29,6 +29,20 @@ def workspace():
     return render_template("workspace.html", page_title="Workspace", user="DAVE CAFFREY", 
                            list_of_numbers=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], blogs=data)
 
+
+@app.route('/workspace/<blog_title>')
+def workspace_blog(blog_title):
+    blog = {}
+
+    with open("data/blogs.json", "r") as json_data:
+        data = json.load(json_data)
+        for obj in data:
+            if obj["url"] == blog_title:
+                blog = obj
+    
+    return "<h1>" + blog["title"] + "</h1>"
+
+
 # call to Flask Class run function passing in 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
