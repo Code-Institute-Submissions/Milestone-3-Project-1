@@ -1,6 +1,15 @@
 {% extends 'base.html'%}
 {% block content %}
 <h2>{{page_title}}</h2>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class="flashes">
+    {% for message in messages %}
+        <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
 <form class="signup" method="POST">
 	<div class="form-row" style="max-width:500px;">
 		<div class="col-md-12">

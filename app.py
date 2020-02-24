@@ -1,9 +1,10 @@
 import os
 import json
 # from the flask module use Flask class and render template function
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash
 # instantiate Flask class and ref with app 
 app = Flask(__name__)
+app.secret_key = "some_secret" 
 
 # first template to index/home page
 @app.route('/')
@@ -14,7 +15,7 @@ def index():
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
-        print(request.form)
+        flash("Thanks {}, we have recieved your message".format(request.form["fname"]))
     return render_template("signup.html", page_title="Sign Up")
 
 # template for login page 
