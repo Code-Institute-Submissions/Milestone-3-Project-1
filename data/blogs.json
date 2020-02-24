@@ -4,7 +4,7 @@
         "body": "this is the body of a blog",
         "user" :"who wrote the blog",
         "date": "the date and time the blog was input",
-        "image_src" : "static/images/gold.jpeg",
+        "image_src" : "/static/images/gold.jpeg",
         "url": "tesla"
     
     },
@@ -13,7 +13,7 @@
         "body": "this is the body of a blog",
         "user" :"who wrote the blog",
         "date": "the date and time the blog was input",
-        "image_src" : "static/images/gold.jpeg",
+        "image_src" : "/static/images/gold.jpeg",
         "url": "amazon"
     
     },
@@ -22,7 +22,7 @@
         "body": "this is the body of a blog",
         "user" :"who wrote the blog",
         "date": "the date and time the blog was input",
-        "image_src" : "static/images/gold.jpeg",
+        "image_src" : "/static/images/gold.jpeg",
         "url": "google"
     
     },
@@ -31,7 +31,7 @@
         "body": "this is the body of a blog",
         "user" :"who wrote the blog",
         "date": "the date and time the blog was input",
-        "image_src" : "static/images/gold.jpeg",
+        "image_src" : "/static/images/gold.jpeg",
         "url": "netflix"
     
     },
@@ -40,7 +40,7 @@
         "body": "this is the body of a blog",
         "user" :"who wrote the blog",
         "date": "the date and time the blog was input",
-        "image_src" : "static/images/gold.jpeg",
+        "image_src" : "/static/images/gold.jpeg",
         "url": "gold"
     
     },
@@ -49,7 +49,7 @@
         "body": "this is the body of a blog",
         "user" :"who wrote the blog",
         "date": "the date and time the blog was input",
-        "image_src" : "static/images/gold.jpeg",
+        "image_src" : "/static/images/gold.jpeg",
         "url": "bonds"
     
     },
@@ -58,7 +58,7 @@
         "body": "this is the body of a blog",
         "user" :"who wrote the blog",
         "date": "the date and time the blog was input",
-        "image_src" : "static/images/gold.jpeg",
+        "image_src" : "/static/images/gold.jpeg",
         "url": "donald"
     
     },
@@ -67,7 +67,7 @@
         "body": "this is the body of a blog",
         "user" :"who wrote the blog",
         "date": "the date and time the blog was input",
-        "image_src" : "static/images/gold.jpeg",
+        "image_src" : "/static/images/gold.jpeg",
         "url": "ireland"
     
     }

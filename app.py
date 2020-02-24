@@ -1,7 +1,7 @@
 import os
 import json
 # from the flask module use Flask class and render template function
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 # instantiate Flask class and ref with app 
 app = Flask(__name__)
 
@@ -11,8 +11,10 @@ def index():
     return render_template("index.html", page_title="Home")
 
 # template for signup page
-@app.route('/signup')
+@app.route('/signup', methods=["GET", "POST"])
 def signup():
+    if request.method == "POST":
+        print(request.form)
     return render_template("signup.html", page_title="Sign Up")
 
 # template for login page 
@@ -40,7 +42,7 @@ def workspace_blog(blog_title):
             if obj["url"] == blog_title:
                 blog = obj
     
-    return "<h1>" + blog["title"] + "</h1>"
+    return render_template("blog.html", blog=blog)
 
 
 # call to Flask Class run function passing in 

@@ -1,34 +1,34 @@
 {% extends 'base.html'%}
 {% block content %}
 <h2>{{page_title}}</h2>
-<form class="signup">
+<form class="signup" method="POST">
 	<div class="form-row" style="max-width:500px;">
 		<div class="col-md-12">
 			<label for="validationDefault01">First name</label>
-			<input type="text" class="form-control" id="validationDefault01" value="Mark" required>
+			<input type="text" class="form-control" id="validationDefault01"  required name="fname">
         </div>
 		
         <div class="col-md-12">
 			<label for="validationDefault02">Last name</label>
-			<input type="text" class="form-control" id="validationDefault02" value="Ruffalo" required>
+			<input type="text" class="form-control" id="validationDefault02"  required name="lname">
         </div>
          <div class="col-md-12">
 			<label for="validationDefault06">User Name</label>
-			<input type="text" class="form-control" id="validationDefault06" value="mruff" required>
+			<input type="text" class="form-control" id="validationDefault06"  required name="user">
         </div>
 		
         <div class="col-md-12">
 			<label for="validationDefault03">Email</label>
-			<input type="text" class="form-control" id="validationDefault03" value="markruff@email.com" required>
+			<input type="text" class="form-control" id="validationDefault03"  required name="email">
         </div>
 		
         <div class="col-md-12">
 			<label for="validationDefault04">Password</label>
-			<input type="text" class="form-control" id="validationDefault04" value="password" required>
+			<input type="text" class="form-control" id="validationDefault04"  required name="password">
         </div>
         <div class="col-md-12">
 			<label for="validationDefault05">Confirm Password</label>
-			<input type="text" class="form-control" id="validationDefault05" value="password" required>
+			<input type="text" class="form-control" id="validationDefault05"  required name="confirm_password">
         </div>
        
 		
