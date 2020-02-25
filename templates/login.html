@@ -1,22 +1,31 @@
 {% extends 'base.html'%}
 {% block content %}
-    <h2>{{page_title}}</h2>
-    <form class="login">
+<h2>{{page_title}}</h2>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class="flashes">
+	{% for message in messages %}
+	<li>{{ message }}</li>
+	{% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+<form class="login" method="POST">
 	<div class="form-row" style="max-width:500px;">
 		<div class="col-md-12">
-			<label for="validationDefault06">User Name</label>
-			<input type="text" class="form-control" id="validationDefault06" value="mruff" required>
+			<label for="validationDefault07">User Name</label>
+			<input type="text" class="form-control" id="validationDefault07" required name="user_name">
         </div>
-		
-        <div class="col-md-12">
-			<label for="validationDefault04">Password</label>
-			<input type="text" class="form-control" id="validationDefault04" value="password" required>
+
+			<div class="col-md-12">
+				<label for="validationDefault08">Password</label>
+				<input type="text" class="form-control" id="validationDefault08"  required name="password">
         </div>
-       
-       
-		
-        </div>
-        <br>
-          <button type="submit" class="btn btn-primary">Submit</button>
+
+
+
+			</div>
+			<br>
+			<button type="submit" class="btn btn-primary" value="Login">Submit</button>
 </form>
 {% endblock %}

@@ -1,10 +1,13 @@
 import os
 import json
+from datetime import datetime
 # from the flask module use Flask class and render template function
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request, flash, session
 # instantiate Flask class and ref with app 
 app = Flask(__name__)
 app.secret_key = "some_secret" 
+
+date_time = datetime.now().strftime("%Y:%M:%D:%H:%M:%S")
 
 # first template to index/home page
 @app.route('/')
@@ -19,9 +22,13 @@ def signup():
     return render_template("signup.html", page_title="Sign Up")
 
 # template for login page 
-@app.route('/login')
+@app.route('/login', methods=["GET", "POST"])
 def login():
-    return render_template("login.html", page_title="Login")
+    
+    if request.method == "POST":  
+        flash("{}, you are logged into the system".format(request.form["user_name"]))
+  
+    return render_template("login.html", page_title="login" )
 
 
 @app.route('/workspace')
@@ -33,7 +40,7 @@ def workspace():
                            list_of_numbers=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], blogs=data)
 
 
-@app.route('/workspace/<blog_title>')
+@app.route('/workspace/<blog_title>', methods=["GET", "POST"])
 def workspace_blog(blog_title):
     blog = {}
 
@@ -52,3 +59,7 @@ if __name__ == "__main__":
             port=int(os.environ.get("PORT")),
             #remove debug = True from production code
             debug=True)
+
+
+
+
