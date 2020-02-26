@@ -64,7 +64,7 @@ def find_record():
     doc = get_record()
     if doc:
         print("")
-        for k,v in doc.items:
+        for k, v in doc.items:
             if k != "_id":
                 print(k + ":" + v)
 

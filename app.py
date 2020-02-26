@@ -75,16 +75,11 @@ def workspace():
                            list_of_numbers=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], blogs=data)
 
 
-@app.route('/workspace/<blog_title>', methods=["GET", "POST"])
+@app.route('/workspace/<blog_title>/', methods=["GET", "POST"])
 def workspace_blog(blog_title):
     blog = {}
-
-    with open("data/blogs.json", "r") as json_data:
-        data = json.load(json_data)
-        for obj in data:
-            if obj["url"] == blog_title:
-                blog = obj
-
+    blog = coll.find_one({'title': blog_title})
+     
     return render_template("blog.html", blog=blog)
 
 
