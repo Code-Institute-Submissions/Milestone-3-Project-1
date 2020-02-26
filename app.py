@@ -1,11 +1,32 @@
 import os
+import pymongo
 import json
 from datetime import datetime
 # from the flask module use Flask class and render template function
 from flask import Flask, render_template, request, flash, session
-# instantiate Flask class and ref with app 
+# instantiate Flask class and ref with ap
+from os import path
+if path.exists("env.py"):
+    import env
+p 
 app = Flask(__name__)
-app.secret_key = "some_secret" 
+app.secret_key = "some_secret"
+
+
+MONGODB_URI = os.environ.get("MONGO_URI")
+DBS_NAME = "milestone"
+COLLECTION_NAME = "blog"
+conn = mongo_connect(MONGODB_URI)
+coll = conn[DBS_NAME][COLLECTION_NAME]
+
+
+def mongo_connect(url):
+    try:
+        conn = pymongo.MongoClient(url)
+        print("CONNECTED TO MONGO DATABASE")
+        return conn
+    except pymongo.errors.ConnectionFailure as e:
+        print("WARNING NOT CONNECTED TO DATABASE")
 
 date_time = datetime.now().strftime("%Y:%M:%D:%H:%M:%S")
 
