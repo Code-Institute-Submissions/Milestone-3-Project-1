@@ -109,12 +109,9 @@ def workspace():
     return render_template("workspace.html", blogs=mongo.db.blog.find())
 
 
-@app.route('/workspace/<blog_title>/', methods=["GET", "POST"])
-def workspace_blog(blog_title):
-    blog = {}
-    blog = coll_blog.find_one({'title': blog_title})
-     
-    return render_template("blog.html", blog=blog)
+@app.route('/blog/<blog_id>')
+def workspace_blog(blog_id):
+    return render_template("blog.html", blogs=mongo.db.blog.find({'_id': ObjectId(blog_id)}))
 
 
 # call to Flask Class run function passing in

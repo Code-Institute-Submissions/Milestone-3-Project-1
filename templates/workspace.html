@@ -5,7 +5,7 @@
     {% for blog in blogs %}
       {{ loop.index }}  
       {% if loop.index % 2 !=0 %}
-    
+  <!--{{ url_for('blog',blog_id=blog._id)}}  -->
 <div class="card mb-3" style="max-width: 1000px;">
   <div class="row no-gutters">
     <div class="col-md-4">

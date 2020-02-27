@@ -5,3 +5,5 @@ mongodb+srv://root:<password>@cluster0-siilb.mongodb.net/test?retryWrites=true&w
 Try the following command:
 
 pip freeze > requirements.txt
+
+ <!--{{ url_for('blog',blog_id=blog._id)}}  -->

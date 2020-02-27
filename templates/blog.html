@@ -1,10 +1,10 @@
 {% extends 'base.html'%}
 {% block content %}
-
+{% for blog in blogs%}
 <div class="row">
     <div class="column">
-        <h1>{{ blog.title }}</h1>
-        <img src="{{ blog.img_src }}" class="card-img">
+        <h1 id="title" name="title">{{ blog.title }}</h1>
+        <img src="{{ blog.img_src }}" class="card-img" id="img_src" name="img_src">
         <p>{{ blog.body }}</p>
         <button>Update</button>
         <button>Delete</button>
@@ -15,6 +15,8 @@
 
     </div>
 </div>
+{% endfor %}
+
 
 
 {% endblock %}
