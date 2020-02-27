@@ -3,8 +3,10 @@ import os
 import json
 from datetime import datetime
 # from the flask module use Flask class and render template function
-from flask import Flask, render_template, request, flash, session, redirect, url_for, logging
+from flask import Flask, render_template, request, flash, session, redirect, url_for, logging,request
+from flask_wtf import FlaskForm
 from wtforms import Form, BooleanField, StringField, TextAreaField, PasswordField, validators
+from wtforms.validators import DataRequired
 from passlib.hash import sha256_crypt
 # instantiate Flask class and ref with ap
 from os import path
@@ -38,6 +40,18 @@ coll_blog = conn_blog[DBS_NAME][COLLECTION_NAME]
 coll_users = conn_users[DBS_NAME][COLLECTION_NAME]
 
 
+class RegistrationForm(FlaskForm):
+    name = StringField('Name', [validators.Length(min=5, max=50), validators.DataRequired()])
+    username = StringField('Username', [validators.Length(min=4, max=25), validators.DataRequired()])
+    email = StringField('Email Address', [validators.Length(min=6, max=35), validators.DataRequired()])
+    password = PasswordField('Password', [
+        validators.DataRequired(),
+        validators.EqualTo('confirm', message='The Passwords must match to proceed')
+    ])
+    confirm = PasswordField('Repeat Password')
+    accept_tos = BooleanField('I accept the TOS', [validators.DataRequired()])
+
+
 # first template to index/home page
 @app.route('/')
 def index():
@@ -54,7 +68,7 @@ def signup():
         flash("Thanks {}, we have recieved your message".format(
             request.form["fname"]))
         return redirect('login')
-    return render_template("signup.html", page_title="Sign Up" )
+    return render_template("signup.html", page_title="Sign Up", form=form)
 
 # template for login page
 @app.route('/login', methods=["GET", "POST"])
@@ -100,13 +114,3 @@ if __name__ == "__main__":
             debug=True)
 
 
-class RegistrationForm(Form):
-    name = StringField('Name', [validators.Length(min=5, max=50)])
-    username = StringField('Username', [validators.Length(min=4, max=25)])
-    email = StringField('Email Address', [validators.Length(min=6, max=35)])
-    password = PasswordField('Password', [
-        validators.DataRequired(),
-        validators.EqualTo('confirm', message='The Passwords must match to proceed')
-    ])
-    confirm = PasswordField('Repeat Password')
-    accept_tos = BooleanField('I accept the TOS', [validators.DataRequired()])

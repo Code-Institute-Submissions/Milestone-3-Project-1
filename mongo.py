@@ -6,7 +6,8 @@ if path.exists("env.py"):
 
 MONGODB_URI = os.environ.get("MONGO_URI")
 DBS_NAME = "milestone"
-COLLECTION_NAME = "blog"
+COLLECTION_NAME_BLOG = "blog"
+COLLECTION_NAME_USERS = "users"
 
 
 def mongo_connect(url):
@@ -53,7 +54,7 @@ def add_record():
     new_record = {'title': title,'body': body,'user_name': user_name,'date': date, 'image_src': image_src}
 
     try:
-        coll.insert(new_record)
+        coll_blog.insert(new_record)
         print("")
         print("Record Inserted")
     except:
@@ -88,7 +89,7 @@ def main_loop():
 
 
 conn = mongo_connect(MONGODB_URI)
-coll = conn[DBS_NAME][COLLECTION_NAME]
+coll_blog = conn[DBS_NAME][COLLECTION_NAME_BLOG]
 
 main_loop()
 
