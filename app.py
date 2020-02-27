@@ -1,6 +1,8 @@
 import pymongo
 import os
 import json
+from flask_pymongo import PyMongo
+from bson.objectid import ObjectId
 from datetime import datetime
 # from the flask module use Flask class and render template function
 from flask import Flask, render_template, request, flash, session, redirect, url_for, logging,request
@@ -15,17 +17,20 @@ if path.exists("env.py"):
 
 app = Flask(__name__)
 app.secret_key = "some_secret"
+app.config["MONGO_DBNAME"] = 'milestone'
+MONGO_URI = os.environ.get("MONGO_URI")
+app.config["MONGO_URI"] = MONGO_URI
 
+mongo = PyMongo(app)
 
-MONGODB_URI = os.environ.get("MONGO_URI")
-DBS_NAME = "milestone"
-COLLECTION_NAME = "blog"
-
-
+#DBS_NAME = "milestone"
+#COLLECTION_NAME_BLOG = "blog"
+#COLLECTION_NAME_USERS = "user"
+"""
 def mongo_connect(url):
     try:
         conn = pymongo.MongoClient(url)
-        print("CONNECTED TO MONGO DATABASE")
+        print("CONNECTED TO MONGO DATABASE" + str(conn))
         return conn
     except pymongo.errors.ConnectionFailure as e:
         print("WARNING NOT CONNECTED TO DATABASE")
@@ -36,9 +41,9 @@ date_time = datetime.now().strftime("%Y:%M:%D:%H:%M:%S")
 
 conn_blog = mongo_connect(MONGODB_URI)
 conn_users = mongo_connect(MONGODB_URI)
-coll_blog = conn_blog[DBS_NAME][COLLECTION_NAME]
-coll_users = conn_users[DBS_NAME][COLLECTION_NAME]
-
+coll_blog = conn_blog[DBS_NAME][COLLECTION_NAME_BLOG]
+coll_users = conn_users[DBS_NAME][COLLECTION_NAME_USERS]
+"""
 
 class RegistrationForm(FlaskForm):
     name = StringField('Name', [validators.Length(min=5, max=50), validators.DataRequired()])
@@ -62,12 +67,16 @@ def index():
 def signup():
     form = RegistrationForm(request.form)
     if request.method == "POST" and form.validate():
-        user = User(form.name.data, form.username.data, form.email.data,
-                    form.password.data)
-        coll_users.insert(user)
-        flash("Thanks {}, we have recieved your message".format(
-            request.form["fname"]))
-        return redirect('login')
+        user = {}
+        name = form.name.data 
+        username = form.username.data 
+        email = form.email.data
+        password = sha256_crypt.encrypt(str(form.password.data))
+        user = {"Name": name,"Username": username,"email": email,
+        "password": password}
+        mongo.db.blog.insert_one(user)
+        flash("Thanks {}, we have recieved your message", 'success')
+        return redirect(url_for('login'))
     return render_template("signup.html", page_title="Sign Up", form=form)
 
 # template for login page
@@ -83,6 +92,7 @@ def login():
 
 @app.route('/workspace')
 def workspace():
+    """
     data = []
     try:
         data = coll_blog.find()
@@ -94,8 +104,9 @@ def workspace():
         print("")
         print("NO RESULTS FOUND")
 
-    return render_template("workspace.html", page_title="Workspace", user="DAVE CAFFREY",
-                           list_of_numbers=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], blogs=data)
+    """
+
+    return render_template("workspace.html", blogs=mongo.db.blog.find())
 
 
 @app.route('/workspace/<blog_title>/', methods=["GET", "POST"])

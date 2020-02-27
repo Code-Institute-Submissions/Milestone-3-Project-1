@@ -11,24 +11,24 @@
 {% endif %}
 {% endwith %}
 {% from "includes/_formhelpers.html" import render_field %}
-<form class="signup" method="POST" action="">
-	<div class="form-group" style="max-width:500px;">
-       {{render_field(form.name, class="form-control")}}
+<form class="signup" method="POST" action="" id="users" name="users">
+	<div class="form-group" style="max-width:500px;" >
+       {{render_field(form.name, class="form-control",id="name" name="name")}}
+	</div>
+    <div class="form-group" style="max-width:500px;" >
+        {{render_field(form.email, class="form-control",id="email" name="email")}}
 	</div>
     <div class="form-group" style="max-width:500px;">
-        {{render_field(form.email, class="form-control")}}
+       {{render_field(form.username, class="form-control",id="user_name" name="user_name")}} 
 	</div>
     <div class="form-group" style="max-width:500px;">
-       {{render_field(form.username, class="form-control")}} 
+        {{render_field(form.password, class="form-control", id="password" name="password")}}
 	</div>
     <div class="form-group" style="max-width:500px;">
-        {{render_field(form.password, class="form-control")}}
+       {{render_field(form.confirm, class="form-control",id="confirm" name="confirm_pass")}} 
 	</div>
     <div class="form-group" style="max-width:500px;">
-       {{render_field(form.confirm, class="form-control")}} 
-	</div>
-    <div class="form-group" style="max-width:500px;">
-       {{render_field(form.accept_tos, class="form-control")}} 
+       {{render_field(form.accept_tos, class="form-control", id="accept_tos")}} 
 	</div>
     <input type="submit" value="Register" class="btn btn-primary">	
 </form>
