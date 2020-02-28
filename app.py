@@ -9,7 +9,7 @@ from flask import Flask, render_template, request, flash, session, redirect, url
 from flask_wtf import FlaskForm
 from wtforms import Form, BooleanField, StringField, TextAreaField, PasswordField, validators
 from wtforms.validators import DataRequired
-from passlib.hash import sha256_crypt
+from passlib.hash import pbkdf2_sha256
 # instantiate Flask class and ref with ap
 from os import path
 if path.exists("env.py"):
@@ -35,13 +35,14 @@ class RegistrationForm(Form):
     confirm = PasswordField('Repeat Password')
     accept_tos = BooleanField('I accept the TOS', [validators.InputRequired()])
 
-    class LoginForm(Form):
+
+class LoginForm(Form):
    
-        username = StringField('Username', [validators.Length(min=4, max=25), validators.InputRequired()])
+    username = StringField('Username', [validators.Length(min=4, max=25), validators.InputRequired()])
    
-        password = PasswordField('Password', [
-            validators.InputRequired(),
-            validators.EqualTo('confirm', message='The Passwords must match to proceed')
+    password = PasswordField('Password', [
+        validators.InputRequired(),
+        validators.EqualTo('confirm', message='The Passwords must match to proceed')
     ])
    
 
@@ -59,11 +60,11 @@ def signup():
         name = form.name.data 
         username = form.username.data 
         email = form.email.data
-        password = sha256_crypt.encrypt(str(form.password.data))
+        password = pbkdf2_sha256.hash(str(form.password.data))
         user_signup_form = {
             'name': name,
             'email': email,
-            'username': username,
+            'user_name': username,
             'password': password
         }
         users.insert_one(user_signup_form)
@@ -73,14 +74,25 @@ def signup():
 
 # template for login page
 @app.route('/login', methods=["GET", "POST"])
-def login(users_id):
+def login():
     users = mongo.db.users
+    user = {}
+   
+    form = LoginForm(request.form)
     if request.method == "POST" and form.validate():
-        username = form.username.data
-        password = sha256_crypt.encrypt(str(form.password.data))
-    return redirect(url_for('edit'))
+        username = request.form['username']
+        password_input = request.form['password']
+        user = users.find_one({'user_name': [username]})
 
-    return render_template("login.html", page_title="login", form=form, users= mongo.db.users.find({'_id': ObjectId(users_id)}))
+        if pbkdf2_sha256.verify(password_input, user['password']):
+            app.logger.info("Pass word match")
+            flash("Thanks {}, You have logged in", 'success')
+        else:
+            app.logger.info("PASS WORD DO NOT MATCH") 
+    else:
+        app.logger.info("PASSWORD WRONG")
+        flash("ERRRORRR{}, we have recieved your message", 'success')
+    return render_template("login.html", page_title="login", form=form)
 
 
 @app.route('/blogs')
