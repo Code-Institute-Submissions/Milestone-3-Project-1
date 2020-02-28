@@ -1,3 +1,4 @@
+import pprint
 import pymongo
 import os
 import json
@@ -40,10 +41,7 @@ class LoginForm(Form):
    
     username = StringField('Username', [validators.Length(min=4, max=25), validators.InputRequired()])
    
-    password = PasswordField('Password', [
-        validators.InputRequired(),
-        validators.EqualTo('confirm', message='The Passwords must match to proceed')
-    ])
+    password = PasswordField('Password', [validators.InputRequired()])
    
 
 # first template to index/home page
@@ -77,21 +75,30 @@ def signup():
 def login():
     users = mongo.db.users
     user = {}
-   
     form = LoginForm(request.form)
+    username = form.username.data
+    password_input = form.password.data
+    result = {}
     if request.method == "POST" and form.validate():
-        username = request.form['username']
-        password_input = request.form['password']
-        user = users.find_one({'user_name': [username]})
+        
+        
+        app.logger.info("App gets this far")
+        pprint.pprint(list(mongo.db.users.find_one({"user_name":username})))
+        result = mongo.db.users.find_one({"user_name":username})
+        app.logger.info(result)
 
-        if pbkdf2_sha256.verify(password_input, user['password']):
+    if pbkdf2_sha256.verify(password_input, result["password"]):
+        """password = user["password"]
+        app.logger.info("App gets this far")
+        
+        if pbkdf2_sha256.verify(password_input, password):
             app.logger.info("Pass word match")
             flash("Thanks {}, You have logged in", 'success')
         else:
             app.logger.info("PASS WORD DO NOT MATCH") 
     else:
         app.logger.info("PASSWORD WRONG")
-        flash("ERRRORRR{}, we have recieved your message", 'success')
+        flash("ERRRORRR{}, we have recieved your message", 'success')"""
     return render_template("login.html", page_title="login", form=form)
 
 
