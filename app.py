@@ -90,8 +90,8 @@ def login():
     return render_template("login.html", page_title="login")
 
 
-@app.route('/workspace')
-def workspace():
+@app.route('/blogs')
+def blogs():
     """
     data = []
     try:
@@ -106,7 +106,7 @@ def workspace():
 
     """
 
-    return render_template("workspace.html", blogs=mongo.db.blog.find())
+    return render_template("blogs.html", blogs=mongo.db.blog.find())
 
 
 @app.route('/blog/<blog_id>')
