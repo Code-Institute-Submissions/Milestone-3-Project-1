@@ -10,22 +10,16 @@
 </ul>
 {% endif %}
 {% endwith %}
-<form class="login" method="POST">
-	<div class="form-row" style="max-width:500px;">
-		<div class="col-md-12">
-			<label for="validationDefault07">User Name</label>
-			<input type="text" class="form-control" id="validationDefault07" required name="user_name">
-        </div>
-
-			<div class="col-md-12">
-				<label for="validationDefault08">Password</label>
-				<input type="text" class="form-control" id="validationDefault08"  required name="password">
-        </div>
-
-
-
-			</div>
-			<br>
-			<button type="submit" class="btn btn-primary" value="Login">Submit</button>
+{% from "includes/_formhelpers.html" import render_field %}
+<form class="login" method="POST" action="/login" id="users" name="users">
+    <div class="form-group" style="max-width:500px;">
+       {{render_field(form.username, class="form-control",id="user_name" )}} 
+	</div>
+    <div class="form-group" style="max-width:500px;">
+        {{render_field(form.password, class="form-control", id="password" )}}
+	</div>
+    <input type="submit" value="Login" class="btn btn-primary">	
 </form>
+	
+
 {% endblock %}

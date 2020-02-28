@@ -23,6 +23,7 @@ app.config["MONGO_URI"] = MONGO_URI
 
 mongo = PyMongo(app)
 
+
 class RegistrationForm(Form):
     name = StringField('Name', [validators.Length(min=5, max=50), validators.InputRequired()])
     username = StringField('Username', [validators.Length(min=4, max=25), validators.InputRequired()])
@@ -34,6 +35,15 @@ class RegistrationForm(Form):
     confirm = PasswordField('Repeat Password')
     accept_tos = BooleanField('I accept the TOS', [validators.InputRequired()])
 
+    class LoginForm(Form):
+   
+        username = StringField('Username', [validators.Length(min=4, max=25), validators.InputRequired()])
+   
+        password = PasswordField('Password', [
+            validators.InputRequired(),
+            validators.EqualTo('confirm', message='The Passwords must match to proceed')
+    ])
+   
 
 # first template to index/home page
 @app.route('/')
@@ -63,13 +73,14 @@ def signup():
 
 # template for login page
 @app.route('/login', methods=["GET", "POST"])
-def login():
+def login(users_id):
+    users = mongo.db.users
+    if request.method == "POST" and form.validate():
+        username = form.username.data
+        password = sha256_crypt.encrypt(str(form.password.data))
+    return redirect(url_for('edit'))
 
-    if request.method == "POST":
-        flash("{}, you are logged into the system".format(
-            request.form["user_name"]))
-
-    return render_template("login.html", page_title="login")
+    return render_template("login.html", page_title="login", form=form, users= mongo.db.users.find({'_id': ObjectId(users_id)}))
 
 
 @app.route('/blogs')
@@ -80,6 +91,11 @@ def blogs():
 @app.route('/blog/<blog_id>')
 def workspace_blog(blog_id):
     return render_template("blog.html", blogs=mongo.db.blog.find({'_id': ObjectId(blog_id)}))
+
+
+@app.route('/edit')
+def edit():
+    return render_template("edit.html", blogs=mongo.db.blog.find())
 
 
 # call to Flask Class run function passing in
