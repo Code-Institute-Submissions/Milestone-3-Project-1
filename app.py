@@ -23,38 +23,16 @@ app.config["MONGO_URI"] = MONGO_URI
 
 mongo = PyMongo(app)
 
-#DBS_NAME = "milestone"
-#COLLECTION_NAME_BLOG = "blog"
-#COLLECTION_NAME_USERS = "user"
-"""
-def mongo_connect(url):
-    try:
-        conn = pymongo.MongoClient(url)
-        print("CONNECTED TO MONGO DATABASE" + str(conn))
-        return conn
-    except pymongo.errors.ConnectionFailure as e:
-        print("WARNING NOT CONNECTED TO DATABASE")
-
-
-date_time = datetime.now().strftime("%Y:%M:%D:%H:%M:%S")
-
-
-conn_blog = mongo_connect(MONGODB_URI)
-conn_users = mongo_connect(MONGODB_URI)
-coll_blog = conn_blog[DBS_NAME][COLLECTION_NAME_BLOG]
-coll_users = conn_users[DBS_NAME][COLLECTION_NAME_USERS]
-"""
-
-class RegistrationForm(FlaskForm):
-    name = StringField('Name', [validators.Length(min=5, max=50), validators.DataRequired()])
-    username = StringField('Username', [validators.Length(min=4, max=25), validators.DataRequired()])
-    email = StringField('Email Address', [validators.Length(min=6, max=35), validators.DataRequired()])
+class RegistrationForm(Form):
+    name = StringField('Name', [validators.Length(min=5, max=50), validators.InputRequired()])
+    username = StringField('Username', [validators.Length(min=4, max=25), validators.InputRequired()])
+    email = StringField('Email Address', [validators.Length(min=6, max=35), validators.InputRequired(), validators.Email()])
     password = PasswordField('Password', [
-        validators.DataRequired(),
+        validators.InputRequired(),
         validators.EqualTo('confirm', message='The Passwords must match to proceed')
     ])
     confirm = PasswordField('Repeat Password')
-    accept_tos = BooleanField('I accept the TOS', [validators.DataRequired()])
+    accept_tos = BooleanField('I accept the TOS', [validators.InputRequired()])
 
 
 # first template to index/home page
@@ -65,16 +43,20 @@ def index():
 # template for signup page
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
+    users = mongo.db.users
     form = RegistrationForm(request.form)
     if request.method == "POST" and form.validate():
-        user = {}
         name = form.name.data 
         username = form.username.data 
         email = form.email.data
         password = sha256_crypt.encrypt(str(form.password.data))
-        user = {"Name": name,"Username": username,"email": email,
-        "password": password}
-        mongo.db.blog.insert_one(user)
+        user_signup_form = {
+            'name': name,
+            'email': email,
+            'username': username,
+            'password': password
+        }
+        users.insert_one(user_signup_form)
         flash("Thanks {}, we have recieved your message", 'success')
         return redirect(url_for('login'))
     return render_template("signup.html", page_title="Sign Up", form=form)
@@ -92,20 +74,6 @@ def login():
 
 @app.route('/blogs')
 def blogs():
-    """
-    data = []
-    try:
-        data = coll_blog.find()
-        print(data)
-    except:
-        print("Errrorrrrrr")
-
-    if not data:
-        print("")
-        print("NO RESULTS FOUND")
-
-    """
-
     return render_template("blogs.html", blogs=mongo.db.blog.find())
 
 
