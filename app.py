@@ -6,7 +6,8 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from datetime import datetime
 # from the flask module use Flask class and render template function
-from flask import Flask, render_template, request, flash, session, redirect, url_for, logging,request
+from flask import Flask, render_template, request, flash, session, redirect, url_for, logging, request,g
+from functools import wraps
 from flask_wtf import FlaskForm
 from wtforms import Form, BooleanField, StringField, TextAreaField, PasswordField, validators
 from wtforms.validators import DataRequired
@@ -80,26 +81,27 @@ def login():
     password_input = form.password.data
     result = {}
     if request.method == "POST" and form.validate():
-        
-        
         app.logger.info("App gets this far")
         pprint.pprint(list(mongo.db.users.find_one({"user_name":username})))
         result = mongo.db.users.find_one({"user_name":username})
+        f_pass = result["password"]
         app.logger.info(result)
-
-    if pbkdf2_sha256.verify(password_input, result["password"]):
-        """password = user["password"]
-        app.logger.info("App gets this far")
-        
-        if pbkdf2_sha256.verify(password_input, password):
-            app.logger.info("Pass word match")
+        app.logger.info(f_pass)
+        if pbkdf2_sha256.verify(password_input, f_pass):
+            app.logger.info(True)
+            session['logged_in'] = True
+            session['username'] = username
             flash("Thanks {}, You have logged in", 'success')
+            return redirect(url_for('edit'))
         else:
-            app.logger.info("PASS WORD DO NOT MATCH") 
-    else:
-        app.logger.info("PASSWORD WRONG")
-        flash("ERRRORRR{}, we have recieved your message", 'success')"""
+            flash("FAILED TO LOG YOU IN TRY AGAIN", 'success')
     return render_template("login.html", page_title="login", form=form)
+
+@app.route('/logout')
+def logout():
+    session.clear()
+  
+    return redirect(url_for('login'))
 
 
 @app.route('/blogs')
@@ -111,8 +113,18 @@ def blogs():
 def workspace_blog(blog_id):
     return render_template("blog.html", blogs=mongo.db.blog.find({'_id': ObjectId(blog_id)}))
 
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'logged_in' in session :
+            return f(*args, **kwargs)
+        else:
+            return redirect(url_for('login', next=request.url))
+    return decorated_function
+
 
 @app.route('/edit')
+@login_required
 def edit():
     return render_template("edit.html", blogs=mongo.db.blog.find())
 
