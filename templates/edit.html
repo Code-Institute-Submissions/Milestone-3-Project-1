@@ -1,7 +1,7 @@
 {% extends 'base.html'%}
 {% block content %}
 <h2>{{page_title}}</h2>
-<p>You are logged on to your workspace {{ user }}</p>
+<p>You are logged on to your workspace {{session.username }}</p>
     {% for blog in blogs %}
       {{ loop.index }}  
       {% if loop.index % 2 !=0 %}
