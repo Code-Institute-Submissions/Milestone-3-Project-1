@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+{% block content %}
+<h2>{{page_title}}</h2>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class="flashes">
+	{% for message in messages %}
+	<li>{{ message }}</li>
+	{% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+{% from "includes/_formhelpers.html" import render_field %}
+<form class="add_blog" method="POST" action="/edit" id="users" name="users">
+     <div class="form-group" style="max-width:500px;">
+       {{render_field(form.title, class="form-control",id="blog_title" )}} 
+	</div>
+    <div class="form-group" style="max-width:500px;">
+       {{render_field(form.body, class="form-control",id="blog_body" )}} 
+	</div>
+    <div class="form-group" style="max-width:500px;">
+        {{render_field(form.username, class="form-control", id="blog_username" )}}
+	</div>
+    <input type="submit" value="Add Blog" class="btn btn-primary">	
+</form>
+	
+
+{% endblock %}
