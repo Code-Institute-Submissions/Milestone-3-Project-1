@@ -43,6 +43,12 @@ class LoginForm(Form):
     username = StringField('Username', [validators.Length(min=4, max=25), validators.InputRequired()])
    
     password = PasswordField('Password', [validators.InputRequired()])
+
+
+class AddBlogForm(Form):
+    title = StringField('Title', [validators.Length(min=5, max=300)])
+    body = TextAreaField('Body', [validators.Length(min=40)])
+    username = StringField('Username', [validators.Length(min=4, max=25)])  
    
 
 # first template to index/home page
@@ -69,6 +75,8 @@ def signup():
         users.insert_one(user_signup_form)
         flash("Thanks {}, we have recieved your message", 'success')
         return redirect(url_for('login'))
+    else:
+        flash("Error")
     return render_template("signup.html", page_title="Sign Up", form=form)
 
 # template for login page
@@ -97,11 +105,7 @@ def login():
             flash("FAILED TO LOG YOU IN TRY AGAIN", 'success')
     return render_template("login.html", page_title="login", form=form)
 
-@app.route('/logout')
-def logout():
-    session.clear()
-  
-    return redirect(url_for('login'))
+
 
 
 @app.route('/blogs')
@@ -116,17 +120,45 @@ def workspace_blog(blog_id):
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'logged_in' in session :
+        if 'logged_in' in session:
             return f(*args, **kwargs)
         else:
             return redirect(url_for('login', next=request.url))
     return decorated_function
 
 
+@app.route('/logout')
+@login_required
+def logout():
+    session.clear()
+  
+    return redirect(url_for('login'))
+
+
 @app.route('/edit')
 @login_required
 def edit():
     return render_template("edit.html", blogs=mongo.db.blog.find())
+
+
+@app.route('/add_blog', methods=["GET", "POST"])
+@login_required
+def add_blog():
+    blogs = mongo.db.blog
+    form = AddBlogForm(request.form)
+    if request.method == 'POST' and form.validate():
+        title = form.title.data
+        body = form.body.data
+        username = form.username.data
+        add_blog = {'title': title, 'body': body, 'username': username}
+        blogs.insert_one(add_blog)
+        flash('Blog Added', 'sucess')
+        return redirect(url_for('edit'))
+
+    return render_template('add_blog.html', form=form)
+
+
+
 
 
 # call to Flask Class run function passing in
