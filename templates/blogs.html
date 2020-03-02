@@ -1,7 +1,7 @@
 {% extends 'base.html'%}
 {% block content %}
 <h2>{{page_title}}</h2>
-<p>You are logged on to your workspace {{ user }}</p>
+<p>You are logged on to your workspace {{session.username  }}</p>
     {% for blog in blogs %}
       
       {% if loop.index % 2 !=0 %}
@@ -17,6 +17,7 @@
         <p class="card-text">{{ blog.body }}</p>
         <p class="card-text">{{ blog.user_name }}</p>
         <p class="card-text"><small class="text-muted">{{blog.date}}</small></p>
+        <p class="card-text"><small class="text-muted">{{blog._id}}</small></p>
       </div>
     </div>
   </div>
@@ -31,6 +32,7 @@
         <p class="card-text">{{ blog.body }}</p>
         <p class="card-text">{{ blog.user_name }}</p>
         <p class="card-text"><small class="text-muted">{{blog.date}}</small></p>
+        <p class="card-text"><small class="text-muted">{{blog._id}}</small></p>
       </div>
     </div>
     <div class="col-md-4">
