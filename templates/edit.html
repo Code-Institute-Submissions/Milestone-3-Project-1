@@ -17,7 +17,7 @@
     <div class="col-md-8">
       <div class="card-body">
       <h5 class="card-title"><a href="/blog/{{ blog._id }}">{{ loop.index }}. {{ blog.title }}</a></h5>
-        <p class="card-text">{{ blog.body }}</p>
+        <p class="card-text">{{ blog.body | safe}}</p>
         <p class="card-text">{{ blog.user_name }}</p>
         <p class="card-text"><small class="text-muted">{{blog.date}}</small></p>
         <p class="card-text"><small class="text-muted">{{blog._id}}</small></p>
@@ -34,7 +34,7 @@
     <div class="col-md-8">
       <div class="card-body">
        <h5 class="card-title"><a href="/blog/{{ blog._id }}">{{ loop.index }}. {{ blog.title }}</a></h5>
-        <p class="card-text">{{ blog.body }}</p>
+        <p class="card-text">{{ blog.body | safe }}</p>
         <p class="card-text">{{ blog.user_name }}</p>
         <p class="card-text"><small class="text-muted">{{blog.date}}</small></p>
         <p class="card-text"><small class="text-muted">{{blog._id}}</small></p>
