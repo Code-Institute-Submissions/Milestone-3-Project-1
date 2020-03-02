@@ -52,6 +52,14 @@ class AddBlogForm(Form):
     username = StringField('Username', [validators.Length(min=4, max=25)])
     date = DateField('Date')
     img_src = StringField('Image URL', [validators.Length(min=5, max=300)])  
+
+
+class EditBlogForm(Form):
+    title = StringField('Title', [validators.Length(min=5, max=300)])
+    body = TextAreaField('Body', [validators.Length(min=40)])
+    username = StringField('Username', [validators.Length(min=4, max=25)])
+    date = DateField('Date')
+    img_src = StringField('Image URL', [validators.Length(min=5, max=300)])  
    
 
 # first template to index/home page
@@ -142,6 +150,17 @@ def logout():
 @login_required
 def edit():
     return render_template("edit.html", blogs=mongo.db.blog.find())
+
+
+@app.route('/edit_blog/<blog_id>')
+@login_required
+def edit_blog(blog_id):
+    blogs = mongo.db.blog.find({'_id': ObjectId(blog_id)})
+    form = EditBlogForm(request.form)
+    #form.title.data = blogs['title']
+
+    
+    return render_template("edit_blog.html", blogs=mongo.db.blog.find({'_id': ObjectId(blog_id)}), form=form)
 
 
 @app.route('/add_blog', methods=["GET", "POST"])
