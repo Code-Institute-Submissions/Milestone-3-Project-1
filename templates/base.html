@@ -42,16 +42,19 @@
 			</ul>
             <ul class="navbar-nav navbar-right">
                 {% if session.logged_in %}
-                </li>
                 	<li class="nav-item">
-					<a class="nav-link" href="{{url_for('logout')}}">LogOut</a>
-				</li>
+					    <a class="nav-link" href="{{url_for('logout')}}">LogOut</a>
+				    </li>
+                    <li class="nav-item">
+					    <a class="nav-link" href="{{url_for('edit')}}">Edit Blogs</a>
+				    </li>
                 {% else %}
-				<li class="nav-item">
-					<a class="nav-link" href="{{url_for('signup')}}">Sign up</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{url_for('login')}}">Login</a>
+				    <li class="nav-item">
+					    <a class="nav-link" href="{{url_for('signup')}}">Sign up</a>
+				    </li>
+				    <li class="nav-item">
+					    <a class="nav-link" href="{{url_for('login')}}">Login</a>
+				    </li>
 				{% endif %}
 		    </ul>
 			
