@@ -2,9 +2,9 @@
 {% block content %}
 <h2>{{page_title}}</h2>
 <p>You are logged on to your workspace {{session.username  }}</p>
-    {% for blog in blogs %}
+    {% for blog in blogs|sort(reverse=true,attribute='_id') %}
       
-      {% if loop.index % 2 !=0 %}
+    {% if loop.index % 2 != 0 %}
   
 <div class="card mb-3" style="max-width: 1000px;">
   <div class="row no-gutters">
@@ -22,7 +22,7 @@
     </div>
   </div>
   </div>
-  {% else %}
+   {% else %}
 <div class="card mb-3" style="max-width: 1000px;">
   <div class="row no-gutters">
     

@@ -4,6 +4,7 @@ import os
 import json
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from bson.timestamp import Timestamp
 from datetime import datetime
 # from the flask module use Flask class and render template function
 from flask import Flask, render_template, request, flash, session, redirect, url_for, logging, request,g
@@ -152,7 +153,9 @@ def add_blog():
         title = form.title.data
         body = form.body.data
         username = form.username.data
-        add_blog = {'title': title, 'body': body, 'username': username}
+        date = form.date.data
+        img_src = form.img_src.data
+        add_blog = {'title': title, 'body': body, 'username': username, 'date': date, 'img_src': img_src}
         blogs.insert_one(add_blog)
         flash('Blog Added', 'sucess')
         return redirect(url_for('edit'))
