@@ -50,15 +50,15 @@ class AddBlogForm(Form):
     title = StringField('Title', [validators.Length(min=5, max=300)])
     body = TextAreaField('Body', [validators.Length(min=40)])
     username = StringField('Username', [validators.Length(min=4, max=25)])
-    date = DateField('Date')
-    img_src = StringField('Image URL', [validators.Length(min=5, max=300)])  
+    date = StringField('Date: dd/mm/yyyy format')
+    img_src = StringField('Image URL', [validators.Length(min=5, max=500)])  
 
 
 class EditBlogForm(Form):
     title = StringField('Title', [validators.Length(min=5, max=300)])
     body = TextAreaField('Body', [validators.Length(min=40)])
     username = StringField('Username', [validators.Length(min=4, max=25)])
-    date = DateField('Date')
+    date = StringField('Date: dd/mm/yyyy format')
     img_src = StringField('Image URL', [validators.Length(min=5, max=300)])  
    
 
@@ -152,21 +152,37 @@ def edit():
     return render_template("edit.html", blogs=mongo.db.blog.find())
 
 
-@app.route('/edit_blog/<blog_id>')
+@app.route('/edit_blog/<blog_id>', methods=["GET", "POST"])
 @login_required
 def edit_blog(blog_id):
-    blogs = mongo.db.blog.find({'_id': ObjectId(blog_id)})
+    blogs = mongo.db.blog.find_one({'_id': ObjectId(blog_id)})
+    app.logger.info(blogs)
     form = EditBlogForm(request.form)
-    #form.title.data = blogs['title']
-
+    form.title.data = blogs["title"]
+    form.body.data = blogs["body"]
+    form.username.data = blogs["user_name"]
+    form.date.data = blogs["date"]
+    form.img_src.data = blogs["img_src"]
+    if request.method == 'POST' and form.validate():
+        title = form.title.data
+        body = form.body.data
+        username = form.username.data
+        date = form.date.data
+        img_src = form.img_src.data
+        add_blog = {'title': title, 'body': body, 'user_name': username, 'date': date, 'img_src': img_src}
+        blogs.update(add_blog)
+        app.logger.info(blogs)
+        flash('Blog Updated', 'sucess')
+        return redirect(url_for('edit'))
     
-    return render_template("edit_blog.html", blogs=mongo.db.blog.find({'_id': ObjectId(blog_id)}), form=form)
+    return render_template("add_blog.html", blogs=mongo.db.blog.find({'_id': ObjectId(blog_id)}), form=form)
 
 
 @app.route('/add_blog', methods=["GET", "POST"])
 @login_required
 def add_blog():
     blogs = mongo.db.blog
+    app.logger.info(blogs)
     form = AddBlogForm(request.form)
     if request.method == 'POST' and form.validate():
         title = form.title.data
@@ -174,8 +190,9 @@ def add_blog():
         username = form.username.data
         date = form.date.data
         img_src = form.img_src.data
-        add_blog = {'title': title, 'body': body, 'username': username, 'date': date, 'img_src': img_src}
+        add_blog = {'title': title, 'body': body, 'user_name': username, 'date': date, 'img_src': img_src}
         blogs.insert_one(add_blog)
+        app.logger.info(blogs)
         flash('Blog Added', 'sucess')
         return redirect(url_for('edit'))
 
