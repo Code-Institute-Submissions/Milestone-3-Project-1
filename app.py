@@ -9,7 +9,7 @@ from datetime import datetime
 from flask import Flask, render_template, request, flash, session, redirect, url_for, logging, request,g
 from functools import wraps
 from flask_wtf import FlaskForm
-from wtforms import Form, BooleanField, StringField, TextAreaField, PasswordField, validators
+from wtforms import Form, BooleanField, StringField, TextAreaField, PasswordField, DateField, validators
 from wtforms.validators import DataRequired
 from passlib.hash import pbkdf2_sha256
 # instantiate Flask class and ref with ap
@@ -48,7 +48,9 @@ class LoginForm(Form):
 class AddBlogForm(Form):
     title = StringField('Title', [validators.Length(min=5, max=300)])
     body = TextAreaField('Body', [validators.Length(min=40)])
-    username = StringField('Username', [validators.Length(min=4, max=25)])  
+    username = StringField('Username', [validators.Length(min=4, max=25)])
+    date = DateField('Date')
+    img_src = StringField('Image URL', [validators.Length(min=5, max=300)])  
    
 
 # first template to index/home page
