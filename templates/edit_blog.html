@@ -14,19 +14,19 @@
 {% for blog in blogs %}
 <form class="edit_blog" method="POST" action="{{ url_for('edit_blog', blog_id=blog._id) }}"  id="users" name="users">
      <div class="form-group" style="max-width:500px;">
-       {{render_field(form.title, class="form-control",id="blog_title",value=blog.title)}} 
+       {{render_field(form.title, class="form-control",id="blog_title")}} 
 	</div>
     <div class="form-group" style="max-width:500px;">
-       {{render_field(form.body, class="form-control",id="editor", value=blog.body)}} 
+       {{render_field(form.body, class="form-control",id="editor")}} 
 	</div>
     <div class="form-group" style="max-width:500px;">
-        {{render_field(form.username, class="form-control", id="blog_username",value=blog.user_name)}}
+        {{render_field(form.username, class="form-control", id="blog_username")}}
 	</div>
     <div class="form-group" style="max-width:500px;">
-        {{render_field(form.date, class="form-control", id="blog_date", value=blog.date)}}
+        {{render_field(form.date, class="form-control", id="blog_date")}}
 	</div>
      <div class="form-group" style="max-width:500px;">
-        {{render_field(form.img_src, class="form-control", id="blog_img_src",value=blog.img_src)}}
+        {{render_field(form.img_src, class="form-control", id="blog_img_src")}}
 	</div>
     <input type="submit" value="Update Blog" class="btn btn-primary">	
 </form>
