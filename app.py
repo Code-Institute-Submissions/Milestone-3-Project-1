@@ -111,7 +111,7 @@ def login():
             session['logged_in'] = True
             session['username'] = username
             flash("Thanks {}, You have logged in", 'success')
-            return redirect(url_for('edit'))
+            return redirect(url_for('blogs'))
         else:
             flash("FAILED TO LOG YOU IN TRY AGAIN", 'success')
     return render_template("login.html", page_title="login", form=form)
@@ -158,24 +158,26 @@ def edit_blog(blog_id):
     blogs = mongo.db.blog.find_one({'_id': ObjectId(blog_id)})
     app.logger.info(blogs)
     form = EditBlogForm(request.form)
-    form.title.data = blogs["title"]
-    form.body.data = blogs["body"]
-    form.username.data = blogs["user_name"]
-    form.date.data = blogs["date"]
-    form.img_src.data = blogs["img_src"]
+    """request.form.title.data = blogs("title")
+    request.form.body.data = blogs("body")
+    request.form.username.data = blogs("user_name")
+    request.form.date.data = blogs("date")
+    request.form.img_src.data = blogs("img_src")"""
     if request.method == 'POST' and form.validate():
-        title = form.title.data
-        body = form.body.data
-        username = form.username.data
-        date = form.date.data
-        img_src = form.img_src.data
-        add_blog = {'title': title, 'body': body, 'user_name': username, 'date': date, 'img_src': img_src}
-        blogs.update(add_blog)
+        
+        blogs.update(
+            {   '_id': ObjectId(blog_id),
+                'title': request.form.get('title'),
+                'body': request.form.get('body'),
+                'username': request.form.get('user_name'),
+                'date': request.form.get('date'),
+                'img_src': request.form.get('img_src')
+            })
         app.logger.info(blogs)
         flash('Blog Updated', 'sucess')
-        return redirect(url_for('edit'))
+        return redirect(url_for('blogs'))
     
-    return render_template("add_blog.html", blogs=mongo.db.blog.find({'_id': ObjectId(blog_id)}), form=form)
+    return render_template("edit_blog.html", form=form, blogs=mongo.db.blog.find({'_id': ObjectId(blog_id)}))
 
 
 @app.route('/add_blog', methods=["GET", "POST"])
