@@ -7,7 +7,7 @@ from bson.objectid import ObjectId
 from bson.timestamp import Timestamp
 from datetime import datetime
 # from the flask module use Flask class and render template function
-from flask import Flask, render_template, request, flash, session, redirect, url_for, logging, request,g
+from flask import Flask, render_template, request, flash, session, redirect, url_for, logging, request, g
 from functools import wraps
 from flask_wtf import FlaskForm
 from wtforms import Form, BooleanField, StringField, TextAreaField, PasswordField, DateField, validators
@@ -28,21 +28,26 @@ mongo = PyMongo(app)
 
 
 class RegistrationForm(Form):
-    name = StringField('Name', [validators.Length(min=5, max=50), validators.InputRequired()])
-    username = StringField('Username', [validators.Length(min=4, max=25), validators.InputRequired()])
-    email = StringField('Email Address', [validators.Length(min=6, max=35), validators.InputRequired(), validators.Email()])
+    name = StringField('Name', [validators.Length(
+        min=5, max=50), validators.InputRequired()])
+    username = StringField('Username', [validators.Length(
+        min=4, max=25), validators.InputRequired()])
+    email = StringField('Email Address', [validators.Length(
+        min=6, max=35), validators.InputRequired(), validators.Email()])
     password = PasswordField('Password', [
         validators.InputRequired(),
-        validators.EqualTo('confirm', message='The Passwords must match to proceed')
+        validators.EqualTo(
+            'confirm', message='The Passwords must match to proceed')
     ])
     confirm = PasswordField('Repeat Password')
     accept_tos = BooleanField('I accept the TOS', [validators.InputRequired()])
 
 
 class LoginForm(Form):
-   
-    username = StringField('Username', [validators.Length(min=4, max=25), validators.InputRequired()])
-   
+
+    username = StringField('Username', [validators.Length(
+        min=4, max=25), validators.InputRequired()])
+
     password = PasswordField('Password', [validators.InputRequired()])
 
 
@@ -51,7 +56,7 @@ class AddBlogForm(Form):
     body = TextAreaField('Body', [validators.Length(min=40)])
     username = StringField('Username', [validators.Length(min=4, max=25)])
     date = StringField('Date: dd/mm/yyyy format')
-    img_src = StringField('Image URL', [validators.Length(min=5, max=500)])  
+    img_src = StringField('Image URL', [validators.Length(min=5, max=500)])
 
 
 class EditBlogForm(Form):
@@ -59,8 +64,8 @@ class EditBlogForm(Form):
     body = TextAreaField('Body', [validators.Length(min=40)])
     username = StringField('Username', [validators.Length(min=4, max=25)])
     date = StringField('Date: dd/mm/yyyy format')
-    img_src = StringField('Image URL', [validators.Length(min=5, max=300)])  
-   
+    img_src = StringField('Image URL', [validators.Length(min=5, max=300)])
+
 
 # first template to index/home page
 @app.route('/')
@@ -73,8 +78,8 @@ def signup():
     users = mongo.db.users
     form = RegistrationForm(request.form)
     if request.method == "POST" and form.validate():
-        name = form.name.data 
-        username = form.username.data 
+        name = form.name.data
+        username = form.username.data
         email = form.email.data
         password = pbkdf2_sha256.hash(str(form.password.data))
         user_signup_form = {
@@ -101,8 +106,8 @@ def login():
     result = {}
     if request.method == "POST" and form.validate():
         app.logger.info("App gets this far")
-        pprint.pprint(list(mongo.db.users.find_one({"user_name":username})))
-        result = mongo.db.users.find_one({"user_name":username})
+        pprint.pprint(list(mongo.db.users.find_one({"user_name": username})))
+        result = mongo.db.users.find_one({"user_name": username})
         f_pass = result["password"]
         app.logger.info(result)
         app.logger.info(f_pass)
@@ -117,8 +122,6 @@ def login():
     return render_template("login.html", page_title="login", form=form)
 
 
-
-
 @app.route('/blogs')
 def blogs():
     return render_template("blogs.html", blogs=mongo.db.blog.find())
@@ -127,6 +130,7 @@ def blogs():
 @app.route('/blog/<blog_id>')
 def workspace_blog(blog_id):
     return render_template("blog.html", blogs=mongo.db.blog.find({'_id': ObjectId(blog_id)}))
+
 
 def login_required(f):
     @wraps(f)
@@ -142,7 +146,7 @@ def login_required(f):
 @login_required
 def logout():
     session.clear()
-  
+
     return redirect(url_for('login'))
 
 
@@ -158,25 +162,32 @@ def edit_blog(blog_id):
     blogs = mongo.db.blog.find_one({'_id': ObjectId(blog_id)})
     app.logger.info(blogs)
     form = EditBlogForm(request.form)
-    """request.form.title.data = blogs("title")
-    request.form.body.data = blogs("body")
-    request.form.username.data = blogs("user_name")
-    request.form.date.data = blogs("date")
-    request.form.img_src.data = blogs("img_src")"""
+    form.title.data = blogs["title"]
+    form.body.data = blogs["body"]
+    form.username.data = blogs["user_name"]
+    form.date.data = blogs["date"]
+    form.img_src.data = blogs["img_src"]
     if request.method == 'POST' and form.validate():
-        
-        blogs.update(
-            {   '_id': ObjectId(blog_id),
-                'title': request.form.get('title'),
-                'body': request.form.get('body'),
-                'username': request.form.get('user_name'),
-                'date': request.form.get('date'),
-                'img_src': request.form.get('img_src')
-            })
+        flash('Posted', 'success')
+        title = request.form['title']
+        body = request.form['body']
+        username = request.form['username']
+        date = request.form['date']
+        img_src = request.form['img_src']
+        app.logger.info(title)
+        mongo.db.blog.update({'_id': ObjectId(blog_id)},
+                     {
+            'title': title,
+            'body': body,
+            'user_name': username,
+            'date': date,
+            'img_src': img_src
+        })
+
         app.logger.info(blogs)
         flash('Blog Updated', 'sucess')
         return redirect(url_for('blogs'))
-    
+
     return render_template("edit_blog.html", form=form, blogs=mongo.db.blog.find({'_id': ObjectId(blog_id)}))
 
 
@@ -192,7 +203,8 @@ def add_blog():
         username = form.username.data
         date = form.date.data
         img_src = form.img_src.data
-        add_blog = {'title': title, 'body': body, 'user_name': username, 'date': date, 'img_src': img_src}
+        add_blog = {'title': title, 'body': body,
+                    'user_name': username, 'date': date, 'img_src': img_src}
         blogs.insert_one(add_blog)
         app.logger.info(blogs)
         flash('Blog Added', 'sucess')
@@ -201,14 +213,9 @@ def add_blog():
     return render_template('add_blog.html', form=form)
 
 
-
-
-
 # call to Flask Class run function passing in
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
             # remove debug = True from production code
             debug=True)
-
-
