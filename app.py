@@ -191,6 +191,14 @@ def edit_blog(blog_id):
     return render_template("edit_blog.html", form=form, blogs=mongo.db.blog.find({'_id': ObjectId(blog_id)}))
 
 
+@app.route('/delete_blog/<blog_id>', methods=["GET","POST"])
+@login_required
+def delete_blog(blog_id):
+    mongo.db.blog.remove({'_id': ObjectId(blog_id)})
+    return redirect(url_for('blogs'))
+
+
+
 @app.route('/add_blog', methods=["GET", "POST"])
 @login_required
 def add_blog():
@@ -211,6 +219,10 @@ def add_blog():
         return redirect(url_for('edit'))
 
     return render_template('add_blog.html', form=form)
+
+
+
+
 
 
 # call to Flask Class run function passing in
