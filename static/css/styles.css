@@ -1,12 +1,44 @@
 html,body {
     width: 100%;
-    height: 900px;
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+}
+header{
+    background-color: orange;
+    padding: 20px;
     
 }
-
-.jumbotron {
-    color: white;
+h1{
+    text-align: center;
 }
+#lhs-aside{
+    background-color: orange;
+    float: left;
+    width: 20%;
+    padding: 15px;
+}
+#section-center{
+    float: left;
+    width: 60%;
+    padding: 15px;
+}
+#rhs-aside{
+    background-color: orange;
+    float: left;
+    width: 20%;
+    padding: 15px;
+}
+#hero-welcome{
+    text-align: center;
+}
+
+
+div.card {
+  
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+}
+
 
 img.card-img {
     width: 330px;
@@ -16,8 +48,65 @@ img.card-img {
 .signup, .login {
     margin: 100px 100px 100px 100px;
 }
-
-#index {
-    background-image: url("static/images/ny3.jpeg");
+* Fixed/sticky icon bar (vertically aligned 50% from the top of the screen) */
+div.icon-bar {
+  width: 60px;
+  position: fixed;
+  top: 80%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  
+  z-index: 1;
 }
+
+/* Style the icon bar links */
+.icon-bar a {
+  display: block;
+  text-align: center;
+  padding: 16px;
+  transition: all 0.3s ease;
+  color: white;
+  font-size: 20px;
+  width: 60px;
+  
+}
+
+/* Style the social media icons with color, if you want */
+.icon-bar a:hover {
+  background-color: #000;
+}
+
+.facebook {
+  background: #3B5998;
+  color: white;
+  margin-top: 150px;
+  margin-right: 0;
+}
+
+.twitter {
+  background: #55ACEE;
+  color: white;
+  margin-right: 0;
+}
+
+.google {
+  background: #dd4b39;
+  color: white;
+  margin-right: 0;
+}
+
+.linkedin {
+  background: #007bb5;
+  color: white;
+  margin-right: 0;
+}
+
+.youtube {
+  background: #bb0000;
+  color: white;
+  margin-right: 0;
+}
+
+
 
