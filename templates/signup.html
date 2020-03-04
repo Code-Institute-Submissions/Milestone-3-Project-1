@@ -11,7 +11,7 @@
 {% endif %}
 {% endwith %}
 {% from "includes/_formhelpers.html" import render_field %}
-<form class="signup" method="POST" action="/signup" id="users" name="users">
+<form class="signup" method="POST" action="/signup" id="users-signup" name="users">
 	<div class="form-group" style="max-width:500px;" >
        {{render_field(form.name, class="form-control",id="name" )}}
 	</div>

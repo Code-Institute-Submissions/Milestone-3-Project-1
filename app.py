@@ -1,16 +1,13 @@
 import pprint
-import pymongo
 import os
-import json
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-from bson.timestamp import Timestamp
-from datetime import datetime
+
 # from the flask module use Flask class and render template function
-from flask import Flask, render_template, request, flash, session, redirect, url_for, logging, request, g
+from flask import Flask, render_template, request, flash, session, redirect, url_for, request
 from functools import wraps
-from flask_wtf import FlaskForm
-from wtforms import Form, BooleanField, StringField, TextAreaField, PasswordField, DateField, validators
+
+from wtforms import Form, BooleanField, StringField, TextAreaField, PasswordField, validators
 from wtforms.validators import DataRequired
 from passlib.hash import pbkdf2_sha256
 # instantiate Flask class and ref with ap
@@ -27,7 +24,7 @@ app.config["MONGO_URI"] = MONGO_URI
 mongo = PyMongo(app)
 
 
-class RegistrationForm(Form):
+class SignUpForm(Form):
     name = StringField('Name', [validators.Length(
         min=5, max=50), validators.InputRequired()])
     username = StringField('Username', [validators.Length(
@@ -42,7 +39,7 @@ class RegistrationForm(Form):
     confirm = PasswordField('Repeat Password')
     accept_tos = BooleanField('I accept the TOS', [validators.InputRequired()])
 
-
+    
 class LoginForm(Form):
 
     username = StringField('Username', [validators.Length(
@@ -76,7 +73,8 @@ def index():
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
     users = mongo.db.users
-    form = RegistrationForm(request.form)
+    form = SignUpForm(formdata=None, obj=None, prefix='', data=None, meta=None)
+    form = SignUpForm(request.form)
     if request.method == "POST" and form.validate():
         name = form.name.data
         username = form.username.data
@@ -89,33 +87,28 @@ def signup():
             'password': password
         }
         users.insert_one(user_signup_form)
-        flash("Thanks {}, we have recieved your message", 'success')
-        return redirect(url_for('login'))
-    else:
-        flash("Error")
+        
+        return redirect(url_for('signup'))
+   
     return render_template("signup.html", page_title="Sign Up", form=form)
 
 # template for login page
 @app.route('/login', methods=["GET", "POST"])
 def login():
-    users = mongo.db.users
-    user = {}
+    form = LoginForm(formdata=None)
     form = LoginForm(request.form)
     username = form.username.data
     password_input = form.password.data
     result = {}
     if request.method == "POST" and form.validate():
-        app.logger.info("App gets this far")
-        pprint.pprint(list(mongo.db.users.find_one({"user_name": username})))
         result = mongo.db.users.find_one({"user_name": username})
         f_pass = result["password"]
-        app.logger.info(result)
-        app.logger.info(f_pass)
         if pbkdf2_sha256.verify(password_input, f_pass):
             app.logger.info(True)
             session['logged_in'] = True
             session['username'] = username
             flash("Thanks {}, You have logged in", 'success')
+            
             return redirect(url_for('blogs'))
         else:
             flash("FAILED TO LOG YOU IN TRY AGAIN", 'success')
