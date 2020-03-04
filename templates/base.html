@@ -16,62 +16,85 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
 		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
 	</script>
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!-- Load font awesome icons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}">
 	<title>Milestone-3-Project-dc</title>
 </head>
 
 <body>
+	<header class="header">
+		<h1 class="header-title">The header of the Site</h1>
+	</header>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<a class="navbar-brand" href="{{url_for('index')}}">The LOGOS</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
+        <span class="navbar-toggler-icon"></span>
+        </button>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
 					<a class="nav-link" href="{{url_for('index')}}">Home <span class="sr-only">(current)</span></a>
 				</li>
-			
 				<li class="nav-item">
 					<a class="nav-link" href="{{url_for('blogs')}}">Blogs</a>
 				</li>
-
-
 			</ul>
-            <ul class="navbar-nav navbar-right">
-                {% if session.logged_in %}
-                	<li class="nav-item">
-					    <a class="nav-link" href="{{url_for('logout')}}">LogOut</a>
-				    </li>
-                    <li class="nav-item">
-					    <a class="nav-link" href="{{url_for('edit')}}">Edit Blogs</a>
-				    </li>
-                {% else %}
-				    <li class="nav-item">
-					    <a class="nav-link" href="{{url_for('signup')}}">Sign up</a>
-				    </li>
-				    <li class="nav-item">
-					    <a class="nav-link" href="{{url_for('login')}}">Login</a>
-				    </li>
+			<ul class="navbar-nav navbar-right">
+				{% if session.logged_in %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{url_for('logout')}}">LogOut</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{url_for('edit')}}">Edit Blogs</a>
+				</li>
+				{% else %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{url_for('signup')}}">Sign up</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{url_for('login')}}">Login</a>
+				</li>
 				{% endif %}
-		    </ul>
-			
+			</ul>
 		</div>
 	</nav>
-    
-	
-    <div class="container">
-	{% block content %}
+	<!-- The social media icon bar on RHS -->
+	<div class="row">
+		<aside id="lhs-aside" class="column">
+			<nav>
+				<div class="icon-bar" style="width:60px;">
+					<a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+					<a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+					<a href="#" class="google"><i class="fa fa-google"></i></a>
+					<a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+					<a href="#" class="youtube"><i class="fa fa-youtube"></i></a>
+				</div>
+			</nav>
+		</aside>
+		<!--Adverts bar on LHS-->
+		
+		<div class="column" id="section-center">
+			<section id="section-top">
+				<div class=>
+					{% block content %}
 
-	{% endblock%}
-    </div>
-    
-    <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
-     <script type="text/javascript">
-        CKEDITOR.replace( 'editor' );
-    </script>
+					{% endblock%}
+				</div>
+			</section>
+			<article id="article-bottom">
+			</article>
+		</div>
+        <aside id="rhs-aside" class="column">
+		</aside>
+	</div>
+	<footer id="footer">
+	</footer>
+	<script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
+	<script type="text/javascript">
+		CKEDITOR.replace( 'editor' );
+	</script>
 </body>
 
 </html>
