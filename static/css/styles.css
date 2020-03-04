@@ -40,6 +40,15 @@ div.card {
   margin: auto;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+    line-height: 16px;    
+    max-height: 210px;     
+    -webkit-line-clamp: 2; /* Write the number of 
+                              lines you want to be 
+                              displayed */
+    -webkit-box-orient: vertical;
 }
 #blog-body-limit{
     max-height: 200px;
