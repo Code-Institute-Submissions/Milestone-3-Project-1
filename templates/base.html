@@ -27,7 +27,7 @@
 	<header class="header">
 		<h1 class="header-title">The Daily Blog</h1>
 	</header>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+	<nav class="navbar navbar-expand-sm navbar-dark bg-primary">
 		<a class="navbar-brand" href="{{url_for('index')}}">DCBlog</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -64,48 +64,51 @@
 	<div class="row">
 		<aside id="lhs-aside" class="column ">
 			<nav class="icon-bar">
-                <ul >
-                    <li class="facebook">
-                        <a href="https://www.facebook.com" target="_blank">Facebook<i class="fa fa-facebook"></i></a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="twitter">
-                        <a href="https://twitter.com" target="_blank" >Twitter<i class="fa fa-twitter"></i></a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="google">
-                        <a href="https://www.google.co.uk" target="_blank" >Google<i class="fa fa-google"></i></a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="linkedin">
-                        <a href="https://ie.linkedin.com/" target="_blank" >Linkedin<i class="fa fa-linkedin"></i></a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="youtube">
-                        <a href="https://www.youtube.com" target="_blank" >YouTube<i class="fa fa-youtube"></i></a>
-                    </li>
-                </ul>
+				<ul>
+					<li class="facebook">
+						<a href="https://www.facebook.com" target="_blank">Facebook<i class="fa fa-facebook"></i></a>
+					</li>
+				</ul>
+				<ul>
+					<li class="twitter">
+						<a href="https://twitter.com" target="_blank">Twitter<i class="fa fa-twitter"></i></a>
+					</li>
+				</ul>
+				<ul>
+					<li class="google">
+						<a href="https://www.google.co.uk" target="_blank">Google<i class="fa fa-google"></i></a>
+					</li>
+				</ul>
+				<ul>
+					<li class="linkedin">
+						<a href="https://ie.linkedin.com/" target="_blank">Linkedin<i class="fa fa-linkedin"></i></a>
+					</li>
+				</ul>
+				<ul>
+					<li class="youtube">
+						<a href="https://www.youtube.com" target="_blank">YouTube<i class="fa fa-youtube"></i></a>
+					</li>
+				</ul>
 			</nav>
 		</aside>
 		<!--Adverts bar on LHS-->
-		
-		<div class="column" id="section-center">
-			<section id="section-top">
-				<div class=>
-					{% block content %}
 
-					{% endblock%}
-				</div>
-			</section>
-			<article id="article-bottom">
-			</article>
-		</div>
-        <aside id="rhs-aside" class="column">
+
+		<section class="column" id="section-center">
+
+			{% block content %}
+
+			{% endblock%}
+
+		</section>
+
+
+		<aside id="rhs-aside" class="column">
+			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit ea obcaecati porro unde reprehenderit autem
+				quibusdam repellat quod quia, laudantium illo veniam doloremque sapiente in debitis ut cum eum
+				cupiditate?</p>
 		</aside>
+
 	</div>
 	<footer id="footer">
 	</footer>
