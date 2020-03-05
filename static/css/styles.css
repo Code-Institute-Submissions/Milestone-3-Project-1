@@ -4,6 +4,46 @@ html,body {
     font-family: 'Roboto', sans-serif;
     color:#000;
 }
+@media screen and (max-width: 1000px) {
+  #lhs-aside{
+      display:none;
+  }
+  #rhs-aside{
+      display:none;
+  }
+  img.card-img{
+      display: none;
+  }
+  div #section-center.column{
+      width:100%;
+  }
+  .crop-text2{
+      display: none;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+ 
+  div #section-center.column{
+      width:100%;
+  }
+  .crop-text2{
+      display: none;
+  }
+}
+@media screen and (min-width: 1200px) {
+      aside #rhs-aside.column{
+      width: 10%;
+  }
+    div #section-center.column{
+      width:80%;
+  }
+ 
+
+}
+
+
+
 .bg-primary{
     background-color: #79bac1!important;
 }
@@ -24,14 +64,14 @@ h1{
     width: 20%;
     padding: 15px;
 }
-#section-center{
+section #section-center{
     float: left;
     width: 60%;
     padding: 15px;
     text-align: center;
     background-color: #beebe9;
 }
-#rhs-aside{
+aside #rhs-aside.column{
     background-color: o#f1f3f4;
     float: left;
     width: 20%;
@@ -43,33 +83,7 @@ h1{
 }
 
 
-div.card {
-  margin: auto;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-    line-height: 16px;    
-    max-height: 210px;     
-    -webkit-line-clamp: 2; /* Write the number of 
-                              lines you want to be 
-                              displayed */
-    -webkit-box-orient: vertical;
-}
 
-div.card-text{
-    white-space: nowrap; 
-   overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-    line-height: 16px;    
-    max-height: 210px;     
-    -webkit-line-clamp: 2; /* Write the number of 
-                              lines you want to be 
-                              displayed */
-    -webkit-box-orient: vertical; 
-}
 #blog-body-limit{
     max-height: 200px;
 }
@@ -165,5 +179,4 @@ img.card-img {
  #add_blog, #edit_blog,#users-signup,#users-login{
     padding-left: 200px;
 }
-
 
