@@ -4,7 +4,7 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 
 # from the flask module use Flask class and render template function
-from flask import Flask, render_template, request, flash, session, redirect, url_for, request
+from flask import Flask, render_template, request, flash, session, redirect, url_for, logging, g
 from functools import wraps
 
 from wtforms import Form, BooleanField, StringField, TextAreaField, PasswordField, validators
@@ -73,7 +73,6 @@ def index():
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
     users = mongo.db.users
-    form = SignUpForm(formdata=None, obj=None, prefix='', data=None, meta=None)
     form = SignUpForm(request.form)
     if request.method == "POST" and form.validate():
         name = form.name.data
@@ -88,27 +87,30 @@ def signup():
         }
         users.insert_one(user_signup_form)
         
-        return redirect(url_for('signup'))
+        return redirect(url_for('login'))
    
     return render_template("signup.html", page_title="Sign Up", form=form)
 
 # template for login page
 @app.route('/login', methods=["GET", "POST"])
 def login():
-    form = LoginForm(formdata=None)
+    
     form = LoginForm(request.form)
     username = form.username.data
     password_input = form.password.data
     result = {}
     if request.method == "POST" and form.validate():
+        app.logger.info("App gets this far")
+        pprint.pprint(list(mongo.db.users.find_one({"user_name": username})))
         result = mongo.db.users.find_one({"user_name": username})
         f_pass = result["password"]
+        app.logger.info(result)
+        app.logger.info(f_pass)
         if pbkdf2_sha256.verify(password_input, f_pass):
             app.logger.info(True)
             session['logged_in'] = True
             session['username'] = username
             flash("Thanks {}, You have logged in", 'success')
-            
             return redirect(url_for('blogs'))
         else:
             flash("FAILED TO LOG YOU IN TRY AGAIN", 'success')
