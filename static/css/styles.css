@@ -2,17 +2,24 @@ html,body {
     width: 100%;
     height: 100%;
     font-family: 'Roboto', sans-serif;
+    color:#000;
+}
+.bg-primary{
+    background-color: #79bac1!important;
 }
 header{
-    background-color: orange;
+    background-color: #f1f3f4;
     padding: 20px;
     
+}
+#hero-welcome{
+    background-image: linear-gradient(to bottom right, #f4dada,#beebe9);
 }
 h1{
     text-align: center;
 }
 #lhs-aside{
-    background-color: orange;
+    background-color: #f1f3f4;
     float: left;
     width: 20%;
     padding: 15px;
@@ -22,10 +29,10 @@ h1{
     width: 60%;
     padding: 15px;
     text-align: center;
-    background-color: #738290;
+    background-color: #beebe9;
 }
 #rhs-aside{
-    background-color: orange;
+    background-color: o#f1f3f4;
     float: left;
     width: 20%;
     padding: 15px;
@@ -155,5 +162,8 @@ img.card-img {
 
 /* end of sky blue */
 
+form #add_blog, #edit_blog{
+    padding-left: 200px;
+}
 
 

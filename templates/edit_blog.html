@@ -12,7 +12,7 @@
 {% endwith %}
 {% from "includes/_formhelpers.html" import render_field %}
 {% for blog in blogs %}
-<form class="edit_blog" method="POST" action="{{ url_for('edit_blog', blog_id=blog._id) }}"  id="users" name="users">
+<form class="edit_blog" method="POST" action="{{ url_for('edit_blog', blog_id=blog._id) }}"  id="edit_blog" name="users">
      <div class="form-group" style="max-width:500px;">
        {{render_field(form.title, class="form-control",id="blog_title")}} 
 	</div>
