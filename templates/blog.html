@@ -1,7 +1,7 @@
 {% extends 'base.html'%}
 {% block content %}
 {% for blog in blogs %}
-<div class="row">
+<div class="row" style="height:1000px;">
     <div class="column">
         <h1 id="title" name="title">{{ blog.title }}</h1>
         <img src="{{ blog.img_src }}" class="card-img" id="img_src" name="img_src">
