@@ -6,17 +6,17 @@
       
     {% if loop.index % 2 != 0 %}
   
-<div class="card mb-3 " style="max-width: 1000px;height: 15rem;">
+<div class="card mb-3 " style="max-width:1000px;height: 15rem;">
   <div class="row no-gutters">
     <div class="col-md-4">
       <img src="{{ blog.img_src }}" class="card-img" alt="...">
     </div>
     <div class="col-md-8">
-      <div class="card-body h-100"id="blog-body-limit">
+      <div class="card-body" >
       <h5 class="card-title"><a href="/blog/{{ blog._id }}">{{ blog.title }}</a></h5>
-        <p class="card-text" >{{ blog.body | safe |truncate(200,True) }}</p>
-        <p class="card-text">{{ blog.user_name }}</p>
-        <p class="card-text"><small class="text-muted">{{blog.date}}</small></p>
+        <p class="card-text crop-text-1" >{{ blog.body | safe |truncate(200,True) }}</p>
+        <p class="card-text crop-text-2">{{ blog.user_name }}</p>
+        <p class="card-text crop-text-2 "><small class="text-muted">{{blog.date}}</small></p>
       </div>
     </div>
   </div>
@@ -26,11 +26,11 @@
   <div class="row no-gutters">
     
     <div class="col-md-8">
-      <div class="card-body"id="blog-body-limit">
+      <div class="card-body" >
        <h5 class="card-title"><a href="/blog/{{ blog._id }}">{{ blog.title }}</a></h5>
-        <p class="card-text">{{ blog.body | safe|truncate(200,True)}}</p>
-        <p class="card-text">{{ blog.user_name }}</p>
-        <p class="card-text"><small class="text-muted">{{blog.date}}</small></p>
+        <p class="card-text crop-text-1">{{ blog.body | safe|truncate(200,True)}}</p>
+        <p class="card-text crop-text-2">{{ blog.user_name }}</p>
+        <p class="card-text crop-text-2"><small class="text-muted">{{blog.date}}</small></p>
       </div>
     </div>
     <div class="col-md-4">
