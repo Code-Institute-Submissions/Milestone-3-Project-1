@@ -50,7 +50,7 @@ class LoginForm(Form):
 
 class AddBlogForm(Form):
     title = StringField('Title', [validators.Length(min=5, max=300)])
-    body = TextAreaField('Body', [validators.Length(min=40)])
+    body = TextAreaField('Body', [validators.Length(min=5, max=2000)])
     username = StringField('Username', [validators.Length(min=4, max=25)])
     date = StringField('Date: dd/mm/yyyy format')
     img_src = StringField('Image URL', [validators.Length(min=5, max=500)])
@@ -58,7 +58,7 @@ class AddBlogForm(Form):
 
 class EditBlogForm(Form):
     title = StringField('Title', [validators.Length(min=5, max=300)])
-    body = TextAreaField('Body', [validators.Length(min=40)])
+    body = TextAreaField('Body', [validators.Length(min=5, max=2000)])
     username = StringField('Username', [validators.Length(min=4, max=25)])
     date = StringField('Date: dd/mm/yyyy format')
     img_src = StringField('Image URL', [validators.Length(min=5, max=300)])
