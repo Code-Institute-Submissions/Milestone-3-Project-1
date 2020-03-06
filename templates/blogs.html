@@ -2,46 +2,39 @@
 {% block content %}
 <h2>{{page_title}}</h2>
 <p>You are logged on to your workspace {{session.username  }}</p>
-    {% for blog in blogs|sort(reverse=true,attribute='_id') %}
-      
-    {% if loop.index % 2 != 0 %}
-  
+{% for blog in blogs|sort(reverse=true,attribute='_id') %}
+{% if loop.index % 2 != 0 %}
 <div class="card mb-3" id="blogs" style="max-width:1000px;">
-  <div class="row no-gutters">
-    <div class="col-md-4">
-      <img src="{{ blog.img_src }}" class="card-img" alt="...">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body" >
-      <h5 class="card-title"><a href="/blog/{{ blog._id }}">{{ blog.title }}</a></h5>
-        <p class="card-text crop-text-1" >{{ blog.body | safe |truncate(200,True) }}</p>
-        <p class="card-text crop-text-2">{{ blog.user_name }}</p>
-        <p class="card-text crop-text-2 "><small class="text-muted">{{blog.date}}</small></p>
+   <div class="row no-gutters">
+      <div class="col-md-4">
+         <img src="{{ blog.img_src }}" class="card-img" alt="...">
       </div>
-    </div>
-  </div>
-  </div>
-   {% else %}
-<div class="card mb-3" style="max-width: 1000px;">
-  <div class="row no-gutters">
-    
-    <div class="col-md-8">
-      <div class="card-body" >
-       <h5 class="card-title"><a href="/blog/{{ blog._id }}">{{ blog.title }}</a></h5>
-        <p class="card-text crop-text-1">{{ blog.body | safe|truncate(200,True)}}</p>
-        <p class="card-text crop-text-2">{{ blog.user_name }}</p>
-        <p class="card-text crop-text-2"><small class="text-muted">{{blog.date}}</small></p>
+      <div class="col-md-8">
+         <div class="card-body" >
+            <h5 class="card-title"><a href="/blog/{{ blog._id }}">{{ blog.title }}</a></h5>
+            <p class="card-text crop-text-1" >{{ blog.body | safe |truncate(200,True) }}</p>
+            <p class="card-text crop-text-2">{{ blog.user_name }}</p>
+            <p class="card-text crop-text-2 "><small class="text-muted">{{blog.date}}</small></p>
+         </div>
       </div>
-    </div>
-    <div class="col-md-4">
-      <img src="{{ blog.img_src }}" class="card-img" alt="...">
-    </div>
-  </div>
+   </div>
 </div>
-  {% endif %}
-
-
-
+{% else %}
+<div class="card mb-3" style="max-width: 1000px;">
+   <div class="row no-gutters">
+      <div class="col-md-8">
+         <div class="card-body" >
+            <h5 class="card-title"><a href="/blog/{{ blog._id }}">{{ blog.title }}</a></h5>
+            <p class="card-text crop-text-1">{{ blog.body | safe|truncate(200,True)}}</p>
+            <p class="card-text crop-text-2">{{ blog.user_name }}</p>
+            <p class="card-text crop-text-2"><small class="text-muted">{{blog.date}}</small></p>
+         </div>
+      </div>
+      <div class="col-md-4">
+         <img src="{{ blog.img_src }}" class="card-img" alt="...">
+      </div>
+   </div>
+</div>
+{% endif %}
 {% endfor %}
-
 {% endblock %}
