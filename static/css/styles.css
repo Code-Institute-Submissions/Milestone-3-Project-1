@@ -5,24 +5,28 @@ html,body {
     color:#000;
 }
 @media screen and (max-width: 1000px) {
- .h2, h2{
+ .h2, h2,  h1#title,p{
     width:80%;
     text-align: center;
     padding: 0 0 0 2px;
     margin: auto;
  }
- form#users-signup.signup{
+ form#users-signup.signup,form#users-login.login,form#add_blog.add_blog{
      margin: auto;
      padding: 0 0 0 2px;
      width:80%;
  }
-  form#users-login.login{
-     margin: auto;
-     padding: 0 0 0 2px;
-     width:80%;
- }
+
+   a.btn.btn-primary{
+       margin-left: 10%;
+   }
+
 }
 @media screen and (max-width: 1000px) {
+   div.row{
+       width:90%;
+       margin: 0 0 0 0;
+   }
   #lhs-aside{
       display:none;
   }
@@ -38,6 +42,7 @@ html,body {
   .crop-text2{
       display: none;
   }
+ 
 }
 
 @media screen and (min-width: 1000px) {
@@ -48,6 +53,16 @@ html,body {
   .crop-text2{
       display: none;
   }
+   p{
+      width:80%;
+      margin: auto;
+  }
+  a.btn.btn-primary{
+       margin-left: 35%;
+   }
+   img#img_src.card-img{
+       margin-left: 30%;
+   }
 }
 @media screen and (min-width: 1200px) {
       aside #rhs-aside.column{
