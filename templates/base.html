@@ -1,107 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-      <!-- Load font awesome icons -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}">
-      <title>BlogBlogBlogBlogBlogBlogBlog</title>
-   </head>
-   <body>
-   <!--HEADER SECTION-->
-      <header class="header">
-         <h1 class="header-title">The Daily Commute Blog</h1>
-      </header>
-    <!--NAVIGATION-->
-      <nav class="navbar navbar-expand-md navbar-dark bg-primary">
-         <a class="navbar-brand" href="{{url_for('index')}}">DCBlog</a>
-         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-         <span class="navbar-toggler-icon"></span>
-         </button>
-         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-               <li class="nav-item active">
-                  <a class="nav-link" href="{{url_for('index')}}">Home <span class="sr-only">(current)</span></a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" href="{{url_for('blogs')}}">Blogs</a>
-               </li>
-            </ul>
-            <ul class="navbar-nav navbar-right">
-               {% if session.logged_in %}
-               <li class="nav-item">
-                  <a class="nav-link" href="{{url_for('logout')}}">LogOut</a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" href="{{url_for('edit')}}">Edit Blogs</a>
-               </li>
-               {% else %}
-               <li class="nav-item">
-                  <a class="nav-link" href="{{url_for('signup')}}">Sign up</a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" href="{{url_for('login')}}">Login</a>
-               </li>
-               {% endif %}
-            </ul>
-         </div>
-      </nav>
-      <!-- The social media icon bar on LHS -->
-      <div class="row">
-         <aside id="lhs-aside" class="column ">
-            <nav class="icon-bar">
-               <ul>
-                  <li class="facebook">
-                     <a href="https://www.facebook.com" target="_blank">Facebook<i class="fa fa-facebook"></i></a>
-                  </li>
-               </ul>
-               <ul>
-                  <li class="twitter">
-                     <a href="https://twitter.com" target="_blank">Twitter<i class="fa fa-twitter"></i></a>
-                  </li>
-               </ul>
-               <ul>
-                  <li class="google">
-                     <a href="https://www.google.co.uk" target="_blank">Google<i class="fa fa-google"></i></a>
-                  </li>
-               </ul>
-               <ul>
-                  <li class="linkedin">
-                     <a href="https://ie.linkedin.com/" target="_blank">Linkedin<i class="fa fa-linkedin"></i></a>
-                  </li>
-               </ul>
-               <ul>
-                  <li class="youtube">
-                     <a href="https://www.youtube.com" target="_blank">YouTube<i class="fa fa-youtube"></i></a>
-                  </li>
-               </ul>
-            </nav>
-         </aside>
-         <!--MAIN BODY-->
-         <section class="column" id="section-center">
-            {% block content %}
-            {% endblock%}
-         </section>
-         <aside id="rhs-aside" class="column">
-         </aside>
-      </div>
-      <!--FOOTER-->
-      <footer id="footer">
-      </footer>
-      <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
-      <script type="text/javascript">
-         CKEDITOR.replace( 'editor' );
-      </script>
-   </body>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+	</script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+	</script>
+	<!-- Load font awesome icons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}">
+	<title>BlogBlogBlogBlogBlogBlogBlog</title>
+</head>
+
+<body>
+	<!--HEADER SECTION-->
+	<div class="container-fluid">
+		<div class="row header">
+			<h1 class="header-title">The Daily Commute Blog</h1>
+		</div>
+	</div>
+	<!--NAVIGATION-->
+	<div class="container-fluid">
+		<div class="row navigation">
+			<nav class="navbar navbar-expand-xl navbar-dark bg-primary">
+				<a class="navbar-brand" href="{{url_for('index')}}">DCBlog</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item active">
+							<a class="nav-link" href="{{url_for('index')}}">Home
+								<span class="sr-only">(current)</span></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{url_for('blogs')}}">Blogs</a>
+						</li>
+					</ul>
+					<ul class="navbar-nav navbar-right">
+						{% if session.logged_in %}
+						<li class="nav-item">
+							<a class="nav-link" href="{{url_for('logout')}}">LogOut</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{url_for('edit')}}">Edit Blogs</a>
+						</li>
+						{% else %}
+						<li class="nav-item">
+							<a class="nav-link" href="{{url_for('signup')}}">Sign up</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{url_for('login')}}">Login</a>
+						</li>
+						{% endif %}
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</div>
+	<!-- The social media icon bar on LHS -->
+	<div class="container-fluid">
+		<div class="row">
+			<div id="lhs-aside" class="col-2 d-none d-lg-block">
+				<nav class="icon-bar">
+					<ul>
+						<li class="facebook">
+							<a href="https://www.facebook.com"
+								target="_blank">Facebook<i class="fa fa-facebook"></i></a>
+						</li>
+					</ul>
+					<ul>
+						<li class="twitter">
+							<a href="https://twitter.com" target="_blank">Twitter<i class="fa fa-twitter"></i></a>
+						</li>
+					</ul>
+					<ul>
+						<li class="google">
+							<a href="https://www.google.co.uk" target="_blank">Google<i class="fa fa-google"></i></a>
+						</li>
+					</ul>
+					<ul>
+						<li class="linkedin">
+							<a href="https://ie.linkedin.com/"
+								target="_blank">Linkedin<i class="fa fa-linkedin"></i></a>
+						</li>
+					</ul>
+					<ul>
+						<li class="youtube">
+							<a href="https://www.youtube.com" target="_blank">YouTube<i class="fa fa-youtube"></i></a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+			<!--MAIN BODY-->
+			<div class="col-8" id="section-center">
+				{% block content %}
+				{% endblock%}
+			</div>
+			<div id="rhs-aside" class="col-2 d-none d-lg-block">
+				<div class="card border-primary mb-3" style="max-width: 18rem;">
+					<div class="card-header">Profile</div>
+					<div class="card-body text-primary">
+						<h5 class="card-title">David Caffrey</h5>
+						<p class="card-text">A Full Stack Web Developer based in County Limerick,Ireland</p>
+					</div>
+				</div>
+				<div class="card border-primary mb-3" style="max-width: 18rem;">
+					<div class="card-header">Profile</div>
+					<div class="card-body text-primary">
+						<h5 class="card-title">ORC12</h5>
+						<p class="card-text">An International man of mystery of no fixed abode.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--FOOTER-->
+	<div class="container-fluid">
+		<div class="row" id="footer">
+            <h4>David Caffrey Web Services 2020</h4>
+		</div>
+	</div>
+	<script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
+	<script type="text/javascript">
+		CKEDITOR.replace( 'editor' );
+	</script>
+</body>
+
 </html>
