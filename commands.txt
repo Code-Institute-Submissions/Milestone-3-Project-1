@@ -1,9 +1,0 @@
-// command to connect with mongo with python code
-mongodb+srv://root:<password>@cluster0-siilb.mongodb.net/test?retryWrites=true&w=majority
-mongodb+srv://root:<password>@cluster0-siilb.mongodb.net/test?retryWrites=true&w=majority
-
-Try the following command:
-
-pip freeze > requirements.txt
-
- <!--{{ url_for('blog',blog_id=blog._id)}}  -->
