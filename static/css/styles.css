@@ -11,9 +11,6 @@ body{
     
 }
 
-nav.navbar.navbar-expand-xl.navbar-dark.bg-primary{
-    
-}
 @media only screen and (max-width: 500px) {
     div #footer.row{
             display: none;
