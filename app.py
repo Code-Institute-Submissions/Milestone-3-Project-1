@@ -1,4 +1,3 @@
-import pprint
 import os
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
