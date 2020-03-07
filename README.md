@@ -79,13 +79,30 @@ img_src| www.google.com
  
 ## Future Features 
 ---------------------------------------------------------------------------------------------------------------------------------------
+* the RHS aside holds two profiles, it would good if these where dynamically generated to represent those who have blogged the most.
+* this RHS space could be used for adverts
+* a two step email validation of new signups to further verify the users of the site.
+* allow users to change their login details 
 
 ## Testing
 ---------------------------------------------------------------------------------------------------------------------------------------
+### Validation
+* HTML was passed through a validator
+* CSS was passed through a validator
+* Python was validated through PEP8
+### Manual Testing
+* Responsive - The site was tested on multiple devices and browsers without any flaws.
+* Links - All the links take the user to a valid end point on the site
+* Forms - The Signup and Login perform the correct validation provided by wtforms
+* Database Operations - The users can Create new users by signing up, Read blogs from the DB, Update a particular blog, Delete a blog     all with success.
+
 
 ## Deployment
 ---------------------------------------------------------------------------------------------------------------------------------------
+The site was deployed to heroku and uses MongoDB as its datastore. The process involved created a remote repo on GitHub, opening up that repo with GitPod thereby creating a local repo that was directly pushed to the remote. The creation of the monoDB and its collections hosted in the cloud. The creation of a new app on heroku and connect to it through the CLI by creating the requirements.txt and Procfile whilst also setting the PORT,IP and MONGOURL so that the app can run on the server. Configure Heroku to get the app from GitHub and then test the app in heroku.
 
+The Project remote repo is[here] (https://github.com/DavidCaffrey/Milestone-3-Project) and can be cloned to the desktop and run locally
+by typing git clone https://github.com/DavidCaffrey/Milestone-3-Project.git into the terminal and once completed type git remote rm origin to break the connection to the remote
 ## Credits
 ----------------------------------------------------------------------------------------------------------------------------------------
 
