@@ -8,8 +8,8 @@
         <p>{{ blog.body | safe }}</p>
         <hr>
         {% if session.logged_in %}
-        <a class=" btn btn-primary" href="/edit_blog/{{ blog._id }}">Edit Blog </a>
-        <a class=" btn btn-primary" href="/delete_blog/{{blog._id}}">Delete Blog </a>
+        <a class=" btn btn-outline-primary" href="/edit_blog/{{ blog._id }}">Edit Blog </a>
+        <a class=" btn btn-outline-primary" href="/delete_blog/{{blog._id}}">Delete Blog </a>
         {% endif %}
     </div>
 </div>
