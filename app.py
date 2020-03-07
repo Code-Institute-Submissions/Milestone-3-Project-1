@@ -116,14 +116,9 @@ def login():
     password_input = form.password.data
     result = {}
     if request.method == "POST" and form.validate():
-        app.logger.info("App gets this far")
-        pprint.pprint(list(mongo.db.users.find_one({"user_name": username})))
         result = mongo.db.users.find_one({"user_name": username})
         f_pass = result["password"]
-        app.logger.info(result)
-        app.logger.info(f_pass)
         if pbkdf2_sha256.verify(password_input, f_pass):
-            app.logger.info(True)
             session['logged_in'] = True
             session['username'] = username
             return redirect(url_for('blogs'))
@@ -190,7 +185,6 @@ def edit():
 @login_required
 def edit_blog(blog_id):
     blogs = mongo.db.blog.find_one({'_id': ObjectId(blog_id)})
-    app.logger.info(blogs)
     form = EditBlogForm(request.form)
     form.title.data = blogs["title"]
     form.body.data = blogs["body"]
@@ -198,13 +192,11 @@ def edit_blog(blog_id):
     form.date.data = blogs["date"]
     form.img_src.data = blogs["img_src"]
     if request.method == 'POST' and form.validate():
-        flash('Posted', 'success')
         title = request.form['title']
         body = request.form['body']
         username = request.form['username']
         date = request.form['date']
         img_src = request.form['img_src']
-        app.logger.info(title)
         mongo.db.blog.update({'_id': ObjectId(blog_id)},
         {
             'title': title,
@@ -214,7 +206,6 @@ def edit_blog(blog_id):
             'img_src': img_src
         })
 
-        app.logger.info(blogs)
         flash('Blog Updated', 'sucess')
         return redirect(url_for('blogs'))
 
@@ -239,7 +230,6 @@ def delete_blog(blog_id):
 @login_required
 def add_blog():
     blogs = mongo.db.blog
-    app.logger.info(blogs)
     form = AddBlogForm(request.form)
     if request.method == 'POST' and form.validate():
         title = form.title.data
@@ -250,7 +240,6 @@ def add_blog():
         add_blog = {'title': title, 'body': body,
                     'user_name': username, 'date': date, 'img_src': img_src}
         blogs.insert_one(add_blog)
-        app.logger.info(blogs)
         flash('Blog Added', 'sucess')
         return redirect(url_for('edit'))
 
@@ -260,6 +249,4 @@ def add_blog():
 # call to Flask Class run function passing in
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
-            port=int(os.environ.get("PORT")),
-            # remove debug = True from production code
-            debug=True)
+            port=int(os.environ.get("PORT")))
