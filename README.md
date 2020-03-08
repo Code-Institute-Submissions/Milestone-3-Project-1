@@ -21,6 +21,9 @@ This is the project for the Data-Centric module of the Code Institute Full Stack
   * Delete a blog
   * Logout from the site
   
+## Wireframe
+ To view the wireframe of the project click [here](https://github.com/DavidCaffrey/Milestone-3-Project/blob/master/wireframeMS3.jpg)
+  
 ## Technologies 
 ----------------------------------------------------------------------------------------------------------------------------------------
 * HTML
@@ -90,6 +93,7 @@ img_src| www.google.com
 * HTML was passed through a validator
 * CSS was passed through a validator
 * Python was validated through PEP8
+
 ### Manual Testing
 * Responsive - The site was tested on multiple devices and browsers without any flaws.
 * Links - All the links take the user to a valid end point on the site
@@ -102,7 +106,8 @@ img_src| www.google.com
 The site was deployed to heroku and uses MongoDB as its datastore. The process involved created a remote repo on GitHub, opening up that repo with GitPod thereby creating a local repo that was directly pushed to the remote. The creation of the monoDB and its collections hosted in the cloud. The creation of a new app on heroku and connect to it through the CLI by creating the requirements.txt and Procfile whilst also setting the PORT,IP and MONGOURL so that the app can run on the server. Configure Heroku to get the app from GitHub and then test the app in heroku.
 
 The Project remote repo is[here](https://github.com/DavidCaffrey/Milestone-3-Project) and can be cloned to the desktop and run locally
-by typing git clone https://github.com/DavidCaffrey/Milestone-3-Project.git into the terminal and once completed type git remote rm origin to break the connection to the remote
+by typing git clone (https://github.com/DavidCaffrey/Milestone-3-Project.git) into the terminal and once completed type git remote rm origin to break the connection to the remote
+
 ## Credits
 ----------------------------------------------------------------------------------------------------------------------------------------
 
